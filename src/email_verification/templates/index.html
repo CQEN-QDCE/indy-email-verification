@@ -11,10 +11,10 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}" />
-    <title>British Columbia Email Verification Service</title>
+    <title>Service de Vérification de courriel du Québec</title>
     <meta
       name="description"
-      content="An email verification service used to issue a verifiable credential asserting that you are the owner of an email address."
+      content="Un service de vérification utilisé pour émettre des attestations numériques qui garantissent que vous êtes de détenteur d'un compte de courriel."
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -35,22 +35,22 @@
           <a class="navbar-brand" href="/">
             <img
               class="img-fluid d-none d-md-block"
-              src="/assets/images/bcid-logo-rev-en.svg"
+              src="/assets/images/qc-logo.svg"
               width="177"
               height="44"
-              alt="B.C. Government Logo"
+              alt="Gouvernement du Québec Logo"
             />
 
             <img
               class="img-fluid d-md-none"
-              src="/assets/images/bcid-symbol-rev.svg"
+              src="/assets/images/qc-logo.svg"
               width="63"
               height="44"
-              alt="B.C. Government Logo"
+              alt="Gouvernement du Québec Logo"
             />
           </a>
           <div class="navbar-brand">
-            Email Verification Service **DEMO**
+            Service de Vérification de Courriel du Québec **DEMO**
           </div>
         </div>
       </nav>
@@ -59,9 +59,9 @@
       <div class="container">
         <div class="row">
           <div class="col-md-9 col-sm-8">
-            <h1>Email Verification Service</h1>
+            <h1>Service de Vérification de Courriel CQEN</h1>
             <p>
-              Use the form below to request a verifiable credential about your email address.
+              Utilisez le formulaire ci-dessous pour demander une attestation numérique de votre adresse courriel. 
             </p>
           </div>
         </div>
@@ -74,16 +74,16 @@
                 <div class="form-group">
                   {{ form }}
                   <small id="emailHelp" class="form-text text-muted"
-                    >We'll never share your email with anyone else.</small
+                    >Nous ne partagerons jamais vous données avec personne.</small
                   >
                 </div>
-                <input type="submit" class="btn btn-primary" />
+                <input type="submit" class="btn btn-primary"  value="Envoyer requête"/>
               </fieldset>
             </form>
           </div>
         </div>
         <hr />
-        <div class="row what-is-this">
+        <!--div class="row what-is-this">
           <div class="col-md-9 col-sm-8">
             <h2>What is this?</h2>
             <p>
@@ -99,7 +99,7 @@
               >.
             </p>
           </div>
-        </div>
+        </div-->
       </div>
     </main>
     <footer class="footer">
@@ -110,31 +110,31 @@
             <li class="nav-item">
               <a
                 class="nav-link"
-                href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
+                href="#"
                 target="_blank"
-                >Disclaimer</a
+                >.</a
               >
             </li>
             <li class="nav-item">
               <a
                 class="nav-link"
-                href="https://www2.gov.bc.ca/gov/content/home/privacy"
+                href="#"
                 target="_blank"
-                >Privacy</a
+                >Privacité</a
               >
             </li>
             <li class="nav-item">
               <a
                 class="nav-link"
-                href="https://www2.gov.bc.ca/gov/content/home/accessibility"
+                href="#"
                 target="_blank"
-                >Accessibility</a
+                >Accessibilité</a
               >
             </li>
             <li class="nav-item">
               <a
                 class="nav-link"
-                href="https://www2.gov.bc.ca/gov/content/home/copyright"
+                href="#"
                 target="_blank"
                 >Copyright</a
               >
@@ -142,9 +142,9 @@
             <li class="nav-item">
               <a
                 class="nav-link"
-                href="https://www2.gov.bc.ca/gov/content/home/contact-us"
+                href="#"
                 target="_blank"
-                >Contact Us</a
+                >Contactez Nous</a
               >
             </li>
           </ul>

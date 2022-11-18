@@ -46,7 +46,7 @@ def submit(request):
             invite = response.json()
 
             connection_id = invite["connection_id"]
-            invite_url = invite["invitation_url"]
+            invite_url    = invite["invitation_url"]
 
             form.instance.connection_id = connection_id
             form.instance.invite_url = invite_url
@@ -56,16 +56,19 @@ def submit(request):
 
             redirect_url = f"{os.environ.get('SITE_URL')}/verify/{connection_id}"
 
+            logging.critical("REDIRECT_URL"); 
+            logging.critical({redirect_url});
+
             template = loader.get_template("email.html")
             email_html = template.render({"redirect_url": redirect_url}, request)
 
             send_mail(
-                "BC Email Verification Invite",
+                "Invitation du Service de Vérification de Courriel du Québec",
                 (
-                    "Follow this link to connect with our "
-                    f"verification service: {redirect_url}"
+                    "Suivez ce lien pour vous connecter à notre "
+                    f"service de vérification: {redirect_url}"
                 ),
-                "Email Verification Service <noreply@gov.bc.ca>",
+                "Service de Verification de Courriel du Québec  <noreply@mcn.gov.qc.ca>",
                 [email],
                 fail_silently=False,
                 html_message=email_html,
