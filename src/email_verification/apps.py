@@ -23,8 +23,10 @@ class EmailVerificationConfig(AppConfig):
             cache.get("")
         except ProgrammingError:
             return
-
+        print("================================================[F6015650]")
         cache.set("credential_definition_id", "8WDp23WFnJPUDjd77khhAG:3:CL:28844:Registre_Acces_Virtuel_CQEN", None)
+        print(cache.get("credential_definition_id"))
+        print("================================================[F6015650]")
 
         if cache.get("credential_definition_id") is None:
             schema_body = {
