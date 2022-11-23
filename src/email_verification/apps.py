@@ -30,12 +30,12 @@ class EmailVerificationConfig(AppConfig):
         
         cache.set("credential_definition_id", "8WDp23WFnJPUDjd77khhAG:3:CL:28844:Registre_Acces_Virtuel_CQEN", None)
         
-        logger.info(
-            f"================================================[F6015650] "
-            f" credential definition {credential_definition_id}"
-            f" cache credential definition {cache.get(credential_definition_id)}"
-            f"================================================[F6015650] "
-        )
+        #logger.info(
+        #    f"================================================[F6015650] "
+        #    f" credential definition {credential_definition_id}"
+        ##    f" cache credential definition {cache.get(credential_definition_id)}"
+        #    f"================================================[F6015650] "
+        #)
 
         if cache.get("credential_definition_id") is None:
             schema_body = {
