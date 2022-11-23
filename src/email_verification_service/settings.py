@@ -174,10 +174,10 @@ STATICFILES_DIRS = (os.path.join(PROJECT_ROOT, "assets"),)
 STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['assets']))
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-EMAIL_HOST = os.environ.get("SMTP_EMAIL_HOST")
+EMAIL_HOST = os.environ.get("EMAIL_HOST")
 EMAIL_PORT = os.environ.get("EMAIL_PORT")
 EMAIL_USE_SSL = os.environ.get("EMAIL_USE_SSL") == "false"
-EMAIL_USE_TSL = os.environ.get("EMAIL_USE_TSL") == "true"
+EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS") == "true"
 EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 
