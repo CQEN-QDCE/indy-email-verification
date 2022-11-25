@@ -142,21 +142,27 @@ def verify_redirect(request, connection_id):
 @csrf_exempt
 def webhooks(request, topic):
 
-    logger.info("==========================================================")
+    ogger.info("***********************************************************")
     logger.info(f"Request: [{request}] et topic [{topic}] ")
-    logger.info("==========================================================")
+    ogger.info("***********************************************************")
     message = json.loads(request.body)
     logger.info(f"webhook recieved - topic: {topic} body: {request.body}")
             
     if topic == "connections" and message["state"] == "request":
+        ogger.info("***********************************************************")
+        logger.info(f"[CONNECTIONS==>>REQUEST] ")
+        ogger.info("***********************************************************")
         connection_id = message["connection_id"]
         SessionState.objects.filter(connection_id=connection_id).update(
             state="connection-request-received"
         )
-        return HttpResponse()
+        
 
     # Handle new invites, send cred offer
     if topic == "connections" and message["state"] == "response":
+        ogger.info("***********************************************************")
+        logger.info(f"[CONNECTIONS==>>RESPONSE] ")
+        ogger.info("***********************************************************")
         credential_definition_id = cache.get("credential_definition_id")
         assert credential_definition_id is not None
         connection_id = str(message["connection_id"])
@@ -213,6 +219,9 @@ def webhooks(request, topic):
 
     # Handle completion of credential issue
     if topic == "issue_credential" and message["state"] == "credential_issued":
+        ogger.info("***********************************************************")
+        logger.info(f"[ISSUE_CREDENTIAL==>>CREDENTIAL_ISSUED] ")
+        ogger.info("***********************************************************")
         credential_exchange_id = message["credential_exchange_id"]
         connection_id = message["connection_id"]
 
@@ -228,4 +237,7 @@ def webhooks(request, topic):
         return HttpResponse()
 
     logger.warning(f"Webhook for topic {topic} and state {message['state']} is not implemented")
+        logger.info("***********************************************************")
+        logger.info(f"[NOT IMPLEMENTED] ")
+        logger.info("***********************************************************")
     return HttpResponse()
