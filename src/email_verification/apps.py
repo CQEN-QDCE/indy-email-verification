@@ -13,6 +13,8 @@ AGENT_URL = os.environ.get("AGENT_URL")
 
 API_KEY = os.environ.get("AGENT_ADMIN_API_KEY", "")
 
+CRED_DEF_ID = os.environ.get("CRED_DEF_ID")
+
 class EmailVerificationConfig(AppConfig):
     name = "email_verification"
 
