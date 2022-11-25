@@ -147,16 +147,13 @@ def webhooks(request, topic):
     logger.info("==========================================================")
     message = json.loads(request.body)
     logger.info(f"webhook recieved - topic: {topic} body: {request.body}")
-                 
-
-    if topic == "connections" and message["state"] == "invitation":
-        connection_id = message["connection_id"]
             
     if topic == "connections" and message["state"] == "request":
         connection_id = message["connection_id"]
         SessionState.objects.filter(connection_id=connection_id).update(
             state="connection-request-received"
         )
+    return HttpResponse()
 
     # Handle new invites, send cred offer
     if topic == "connections" and message["state"] == "response":
