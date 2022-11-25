@@ -181,12 +181,12 @@ def webhooks(request, topic):
             "credential_preview": {
                 "attributes": [
                     {
-                        "name": "Email",
+                        "name": "email",
                         "value": verification.email,
                         "mime-type": "text/plain",
                     },
                     {
-                        "name": "Time",
+                        "name": "time",
                         "value": str(datetime.utcnow()),
                         "mime-type": "text/plain",
                     },
