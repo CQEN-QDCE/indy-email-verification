@@ -56,8 +56,8 @@ def submit(request):
 
             redirect_url = f"{os.environ.get('SITE_URL')}/verify/{connection_id}"
 
-            logging.critical("REDIRECT_URL"); 
-            logging.critical({redirect_url});
+            logging.info("REDIRECT_URL"); 
+            logging.info({redirect_url});
 
             template = loader.get_template("email.html")
             email_html = template.render({"redirect_url": redirect_url}, request)
@@ -167,10 +167,10 @@ def webhooks(request, topic):
         assert credential_definition_id is not None
         connection_id = str(message["connection_id"])
 
+        logger.info("***********************************************************")
+        logger.info(f"[SEQ 02] state=connection-formed")
+        logger.info("***********************************************************")
         SessionState.objects.filter(connection_id=connection_id).update(
-            logger.critical("***********************************************************")
-            logger.critical(f"[SEQ 02] state=connection-formed")
-            logger.critical("***********************************************************")
             state="connection-formed"
         )
 
@@ -204,9 +204,9 @@ def webhooks(request, topic):
         }
 
         try:
-            logger.critical("***********************************************************")
-            logger.critical(f"[SEQ 02] /issue-credential/send-offer")
-            logger.critical("***********************************************************")
+            logger.info("***********************************************************")
+            logger.info(f"[SEQ 02] /issue-credential/send-offer")
+            logger.info("***********************************************************")
 
             response = requests.post(
                 f"{AGENT_URL}/issue-credential/send-offer",headers={"x-api-key": API_KEY}, json=request_body
@@ -214,16 +214,16 @@ def webhooks(request, topic):
             response.raise_for_status()
         except Exception:
             logger.exception("Error sending credential offer:")
-            logger.critical("***********************************************************")
-            logger.critical(f"[SEQ 02] state=offer-error")
-            logger.critical("***********************************************************")
+            logger.info("***********************************************************")
+            logger.info(f"[SEQ 02] state=offer-error")
+            logger.info("***********************************************************")
             SessionState.objects.filter(connection_id=connection_id).update(
                 state="offer-error"
             )
         else:
-            logger.critical("***********************************************************")
-            logger.critical(f"[SEQ 02] offer-sent")
-            logger.critical("***********************************************************")
+            logger.info("***********************************************************")
+            logger.info(f"[SEQ 02] offer-sent")
+            logger.info("***********************************************************")
             SessionState.objects.filter(connection_id=connection_id).update(
 
                 state="offer-sent"
@@ -243,9 +243,9 @@ def webhooks(request, topic):
             "Completed credential issue for credential exchange "
             f"{credential_exchange_id} and connection {connection_id}"
         )
-        logger.critical("***********************************************************")
-        logger.critical(f"[SEQ 03] credential-issued")
-        logger.critical("***********************************************************")
+        logger.info("***********************************************************")
+        logger.info(f"[SEQ 03] credential-issued")
+        logger.info("***********************************************************")
         SessionState.objects.filter(connection_id=connection_id).update(
             state="credential-issued"
         )
