@@ -142,16 +142,16 @@ def verify_redirect(request, connection_id):
 @csrf_exempt
 def webhooks(request, topic):
 
-    ogger.info("***********************************************************")
+    logger.info("***********************************************************")
     logger.info(f"Request: [{request}] et topic [{topic}] ")
-    ogger.info("***********************************************************")
+    logger.info("***********************************************************")
     message = json.loads(request.body)
     logger.info(f"webhook recieved - topic: {topic} body: {request.body}")
             
     if topic == "connections" and message["state"] == "request":
-        ogger.info("***********************************************************")
-        logger.info(f"[CONNECTIONS==>>REQUEST] ")
-        ogger.info("***********************************************************")
+        logger.info("***********************************************************")
+        logger.info(f"[CONNECTIONS==>>REQUEST] [SEQ 01]")
+        logger.info("***********************************************************")
         connection_id = message["connection_id"]
         SessionState.objects.filter(connection_id=connection_id).update(
             state="connection-request-received"
@@ -160,14 +160,17 @@ def webhooks(request, topic):
 
     # Handle new invites, send cred offer
     if topic == "connections" and message["state"] == "response":
-        ogger.info("***********************************************************")
-        logger.info(f"[CONNECTIONS==>>RESPONSE] ")
-        ogger.info("***********************************************************")
+        logger.info("***********************************************************")
+        logger.info(f"[CONNECTIONS==>>RESPONSE]  [SEQ 02]")
+        logger.info("***********************************************************")
         credential_definition_id = cache.get("credential_definition_id")
         assert credential_definition_id is not None
         connection_id = str(message["connection_id"])
 
         SessionState.objects.filter(connection_id=connection_id).update(
+            logger.critical("***********************************************************")
+            logger.critical(f"[SEQ 02] state=connection-formed")
+            logger.critical("***********************************************************")
             state="connection-formed"
         )
 
@@ -201,17 +204,28 @@ def webhooks(request, topic):
         }
 
         try:
+            logger.critical("***********************************************************")
+            logger.critical(f"[SEQ 02] /issue-credential/send-offer")
+            logger.critical("***********************************************************")
+
             response = requests.post(
                 f"{AGENT_URL}/issue-credential/send-offer",headers={"x-api-key": API_KEY}, json=request_body
             )
             response.raise_for_status()
         except Exception:
             logger.exception("Error sending credential offer:")
+            logger.critical("***********************************************************")
+            logger.critical(f"[SEQ 02] state=offer-error")
+            logger.critical("***********************************************************")
             SessionState.objects.filter(connection_id=connection_id).update(
                 state="offer-error"
             )
         else:
+            logger.critical("***********************************************************")
+            logger.critical(f"[SEQ 02] offer-sent")
+            logger.critical("***********************************************************")
             SessionState.objects.filter(connection_id=connection_id).update(
+
                 state="offer-sent"
             )
 
@@ -219,9 +233,9 @@ def webhooks(request, topic):
 
     # Handle completion of credential issue
     if topic == "issue_credential" and message["state"] == "credential_issued":
-        ogger.info("***********************************************************")
-        logger.info(f"[ISSUE_CREDENTIAL==>>CREDENTIAL_ISSUED] ")
-        ogger.info("***********************************************************")
+        logger.info("***********************************************************")
+        logger.info(f"[ISSUE_CREDENTIAL==>>CREDENTIAL_ISSUED]  [SEQ 03]")
+        logger.info("***********************************************************")
         credential_exchange_id = message["credential_exchange_id"]
         connection_id = message["connection_id"]
 
@@ -230,6 +244,9 @@ def webhooks(request, topic):
             f"{credential_exchange_id} and connection {connection_id}"
         )
 
+        logger.critical("***********************************************************")
+        logger.critical(f"[SEQ 03] credential-issued")
+        logger.critical("***********************************************************")
         SessionState.objects.filter(connection_id=connection_id).update(
             state="credential-issued"
         )
@@ -238,6 +255,6 @@ def webhooks(request, topic):
 
     logger.warning(f"Webhook for topic {topic} and state {message['state']} is not implemented")
         logger.info("***********************************************************")
-        logger.info(f"[NOT IMPLEMENTED] ")
+        logger.info(f"[NOT IMPLEMENTED]  [SEQ 04]")
         logger.info("***********************************************************")
     return HttpResponse()
