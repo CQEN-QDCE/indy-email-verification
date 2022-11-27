@@ -243,7 +243,6 @@ def webhooks(request, topic):
             "Completed credential issue for credential exchange "
             f"{credential_exchange_id} and connection {connection_id}"
         )
-
         logger.critical("***********************************************************")
         logger.critical(f"[SEQ 03] credential-issued")
         logger.critical("***********************************************************")
@@ -254,7 +253,7 @@ def webhooks(request, topic):
         return HttpResponse()
 
     logger.warning(f"Webhook for topic {topic} and state {message['state']} is not implemented")
-        logger.info("***********************************************************")
-        logger.info(f"[NOT IMPLEMENTED]  [SEQ 04]")
-        logger.info("***********************************************************")
+    logger.info("***********************************************************")
+    logger.info(f"[NOT IMPLEMENTED]  [SEQ 04]")
+    logger.info("***********************************************************")
     return HttpResponse()
