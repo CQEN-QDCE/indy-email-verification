@@ -33,7 +33,7 @@ AGENT_URL = os.environ.get("AGENT_URL")
 API_KEY = os.environ.get("AGENT_ADMIN_API_KEY", "")
 
 def index(request):
-    template = loader.get_templaterequest_body("index.html")
+    template = loader.get_template("index.html")
     return HttpResponse(template.render({"form": EmailForm()}, request))
 
 
