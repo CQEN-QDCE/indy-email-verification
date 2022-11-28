@@ -15,6 +15,8 @@ API_KEY = os.environ.get("AGENT_ADMIN_API_KEY", "")
 
 CRED_DEF_ID = os.environ.get("CRED_DEF_ID")
 
+logger.info(f">>>>>>>>>>>>>>>>vérification du cred_def_id passée correctement {CRED_DEF_ID}")
+
 class EmailVerificationConfig(AppConfig):
     name = "email_verification"
 
