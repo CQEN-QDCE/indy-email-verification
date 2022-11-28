@@ -28,7 +28,7 @@ class EmailVerificationConfig(AppConfig):
         except ProgrammingError:
             return
         logger.info(f">>>>>>>>>>>>>>>>2 - vérification du cred_def_id passée correctement {CRED_DEF_ID}")
-        cache.set("credential_definition_id", "8WDp23WFnJPUDjd77khhAG:3:CL:28936:Registre_Acces_Virtuel_CQEN", None)
+        cache.set("credential_definition_id", {CRED_DEF_ID}, None)
        
         if cache.get("credential_definition_id") is None:
             schema_body = {
