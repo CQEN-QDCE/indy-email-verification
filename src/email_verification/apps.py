@@ -15,7 +15,7 @@ API_KEY = os.environ.get("AGENT_ADMIN_API_KEY", "")
 
 CRED_DEF_ID = os.environ.get("CRED_DEF_ID")
 
-logger.info(f">>>>>>>>>>>>>>>>vérification du cred_def_id passée correctement {CRED_DEF_ID}")
+logger.info(f">>>>>>>>>>>>>>>>1- vérification du cred_def_id passée correctement {CRED_DEF_ID}")
 
 class EmailVerificationConfig(AppConfig):
     name = "email_verification"
@@ -27,7 +27,7 @@ class EmailVerificationConfig(AppConfig):
             cache.get("")
         except ProgrammingError:
             return
-        
+        logger.info(f">>>>>>>>>>>>>>>>2 - vérification du cred_def_id passée correctement {CRED_DEF_ID}")
         cache.set("credential_definition_id", "8WDp23WFnJPUDjd77khhAG:3:CL:28936:Registre_Acces_Virtuel_CQEN", None)
        
         if cache.get("credential_definition_id") is None:
