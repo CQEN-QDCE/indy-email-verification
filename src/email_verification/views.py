@@ -183,10 +183,6 @@ def webhooks(request, topic):
 
         verification = get_object_or_404(Verification, connection_id=connection_id)
 
-        logger.info("<<<<*****************************>>>>")
-        logger.info(f" Avant stringfy: request_body {request_body}")
-        logger.info("<<<<*****************************>>>>")
-
         _request_body = {
             "auto_issue": true,
             "connection_id": "{connection_id}",
@@ -206,6 +202,11 @@ def webhooks(request, topic):
                 ]
             },
         }
+
+        logger.info("<<<<*****************************>>>>")
+        logger.info(f" Avant stringfy: _request_body {_request_body}")
+        logger.info("<<<<*****************************>>>>")
+
 
         request_body = json.dumps(_request_body)
 
