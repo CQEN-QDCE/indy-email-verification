@@ -114,7 +114,7 @@ def in_progress(request, connection_id):
 
 
 def verify_redirect(request, connection_id):
-    verification = get_object_or_4request_body
+    verification = get_object_or_404(Verification, connection_id=connection_id)
     didcomm_url = re.sub(r"^https?:\/\/\S*\?", "didcomm://invite?", invitation_url)
 
     template = loader.get_template("verify.html")
