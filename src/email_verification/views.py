@@ -33,7 +33,7 @@ AGENT_URL = os.environ.get("AGENT_URL")
 API_KEY = os.environ.get("AGENT_ADMIN_API_KEY", "")
 
 def index(request):
-    template = loader.get_template("index.html")
+    template = loader.get_templaterequest_body("index.html")
     return HttpResponse(template.render({"form": EmailForm()}, request))
 
 
@@ -114,9 +114,7 @@ def in_progress(request, connection_id):
 
 
 def verify_redirect(request, connection_id):
-    verification = get_object_or_404(Verification, connection_id=connection_id)
-    invitation_url = verification.invite_url
-
+    verification = get_object_or_4request_body
     didcomm_url = re.sub(r"^https?:\/\/\S*\?", "didcomm://invite?", invitation_url)
 
     template = loader.get_template("verify.html")
@@ -185,18 +183,18 @@ def webhooks(request, topic):
 
         _request_body = {
             "auto_issue": True,
-            "connection_id": connection_id,
-            "cred_def_id": credential_definition_id,
+            "connection_id": f"{connection_id}",
+            "cred_def_id": f"{credential_definition_id}",
             "credential_preview": {
                 "attributes": [
                     {
                         "name": "email",
-                        "value": verification.email,
+                        "value": f"{verification.email}",
                         "mime-type": "text/plain",
                     },
                     {
                         "name": "time",
-                        "value": str(datetime.utcnow()),
+                        "value": f"{str(datetime.utcnow())}",
                         "mime-type": "text/plain",
                     },
                 ]
