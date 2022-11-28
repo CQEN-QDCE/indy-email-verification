@@ -185,7 +185,7 @@ def webhooks(request, topic):
 
         _request_body = {
             "auto_issue": True,
-            "connection_id": {connection_id},
+            "connection_id": connection_id,
             "cred_def_id": credential_definition_id,
             "credential_preview": {
                 "attributes": [
