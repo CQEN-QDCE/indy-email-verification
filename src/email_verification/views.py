@@ -203,6 +203,10 @@ def webhooks(request, topic):
             },
         }
 
+        logger.info("<<<<*****************************>>>>")
+        logger.info(f"request_body {request_body}")
+        logger.info("<<<<*****************************>>>>")
+        
         try:
             logger.info("***********************************************************")
             logger.info(f"[SEQ 02] /issue-credential/send-offer")
@@ -212,11 +216,13 @@ def webhooks(request, topic):
                 f"{AGENT_URL}/issue-credential/send-offer",headers={"x-api-key": API_KEY}, json=request_body
             )
             response.raise_for_status()
+
         except Exception:
             logger.exception("Error sending credential offer:")
             logger.info("***********************************************************")
             logger.info(f"[SEQ 02] state=offer-error")
             logger.info("***********************************************************")
+            
             SessionState.objects.filter(connection_id=connection_id).update(
                 state="offer-error"
             )
@@ -224,6 +230,7 @@ def webhooks(request, topic):
             logger.info("***********************************************************")
             logger.info(f"[SEQ 02] offer-sent")
             logger.info("***********************************************************")
+            
             SessionState.objects.filter(connection_id=connection_id).update(
 
                 state="offer-sent"
