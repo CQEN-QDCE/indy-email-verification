@@ -184,7 +184,7 @@ def webhooks(request, topic):
         verification = get_object_or_404(Verification, connection_id=connection_id)
 
         _request_body = {
-            "auto_issue": true,
+            "auto_issue": True,
             "connection_id": "{connection_id}",
             "cred_def_id": credential_definition_id,
             "credential_preview": {
