@@ -183,9 +183,13 @@ def webhooks(request, topic):
 
         verification = get_object_or_404(Verification, connection_id=connection_id)
 
-        request_body = {
-            "auto_issue": True,
-            "connection_id": connection_id,
+        logger.info("<<<<*****************************>>>>")
+        logger.info(f" Avant stringfy: request_body {request_body}")
+        logger.info("<<<<*****************************>>>>")
+
+        _request_body = {
+            "auto_issue": true,
+            "connection_id": "{connection_id}",
             "cred_def_id": credential_definition_id,
             "credential_preview": {
                 "attributes": [
@@ -203,8 +207,10 @@ def webhooks(request, topic):
             },
         }
 
+        request_body = json.dumps(_request_body)
+
         logger.info("<<<<*****************************>>>>")
-        logger.info(f"request_body {request_body}")
+        logger.info(f" Apres stringfy: request_body {request_body}")
         logger.info("<<<<*****************************>>>>")
         
         try:
