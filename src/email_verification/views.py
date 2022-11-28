@@ -164,6 +164,9 @@ def webhooks(request, topic):
         logger.info(f"[CONNECTIONS==>>RESPONSE]  [SEQ 02]")
         logger.info("***********************************************************")
         credential_definition_id = cache.get("credential_definition_id")
+        logger.info("[")
+        logger.info(credential_definition_id)
+        logger.info("]")
         assert credential_definition_id is not None
         connection_id = str(message["connection_id"])
 
