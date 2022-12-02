@@ -13,10 +13,6 @@ AGENT_URL = os.environ.get("AGENT_URL")
 
 API_KEY = os.environ.get("AGENT_ADMIN_API_KEY", "")
 
-CRED_DEF_ID = os.environ.get("CRED_DEF_ID")
-
-logger.info(f">>>>>>>>>>>>>>>>1- vérification du cred_def_id passée correctement {CRED_DEF_ID}")
-
 class EmailVerificationConfig(AppConfig):
     name = "email_verification"
 
@@ -27,15 +23,17 @@ class EmailVerificationConfig(AppConfig):
             cache.get("")
         except ProgrammingError:
             return
-        logger.info(f">>>>>>>>>>>>>>>>2 - vérification du cred_def_id passée correctement {CRED_DEF_ID}")
-        cache.set("credential_definition_id", CRED_DEF_ID, None)
-       
+
+        logger.info(f"adresse agent: {AGENT_URL}")
+        logger.info(f"api-key: {API_KEY}")
+
         if cache.get("credential_definition_id") is None:
             schema_body = {
-                "schema_name": "Courriel",
-                "schema_version": "0.1",
+                "schema_name": "verified-email",
+                "schema_version": "1.2.5",
                 "attributes": ["email", "time"]
             }
+
             schema_response = requests.post(f"{AGENT_URL}/schemas", headers={"x-api-key": API_KEY}, json=schema_body)
 
             logger.info(schema_response.text)

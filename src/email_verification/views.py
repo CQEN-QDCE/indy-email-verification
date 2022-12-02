@@ -46,7 +46,7 @@ def submit(request):
             invite = response.json()
 
             connection_id = invite["connection_id"]
-            invite_url    = invite["invitation_url"]
+            invite_url = invite["invitation_url"]
 
             form.instance.connection_id = connection_id
             form.instance.invite_url = invite_url
@@ -56,19 +56,16 @@ def submit(request):
 
             redirect_url = f"{os.environ.get('SITE_URL')}/verify/{connection_id}"
 
-            logging.info("REDIRECT_URL"); 
-            logging.info({redirect_url});
-
             template = loader.get_template("email.html")
             email_html = template.render({"redirect_url": redirect_url}, request)
 
             send_mail(
-                "Invitation du Service de Vérification de Courriel du Québec",
+                "Invitation du Service de Vérification de Courriel du CQEN",
                 (
-                    "Suivez ce lien pour vous connecter à notre "
-                    f"service de vérification: {redirect_url}"
+                    "Follow this link to connect with our "
+                    f"verification service: {redirect_url}"
                 ),
-                "ne-pas-repondre@asea.cqen.ca",
+                "Service de Vérification de Courriel <ne-pas-repondre@asea.cqen.ca>",
                 [email],
                 fail_silently=False,
                 html_message=email_html,
@@ -114,9 +111,9 @@ def in_progress(request, connection_id):
 
 
 def verify_redirect(request, connection_id):
-
     verification = get_object_or_404(Verification, connection_id=connection_id)
     invitation_url = verification.invite_url
+
     didcomm_url = re.sub(r"^https?:\/\/\S*\?", "didcomm://invite?", invitation_url)
 
     template = loader.get_template("verify.html")
@@ -142,37 +139,21 @@ def verify_redirect(request, connection_id):
 @csrf_exempt
 def webhooks(request, topic):
 
-    logger.info("***********************************************************")
-    logger.info(f"Request: [{request}] et topic [{topic}] ")
-    logger.info("***********************************************************")
     message = json.loads(request.body)
     logger.info(f"webhook recieved - topic: {topic} body: {request.body}")
-            
+
     if topic == "connections" and message["state"] == "request":
-        logger.info("***********************************************************")
-        logger.info(f"[CONNECTIONS==>>REQUEST] [SEQ 01]")
-        logger.info("***********************************************************")
         connection_id = message["connection_id"]
         SessionState.objects.filter(connection_id=connection_id).update(
             state="connection-request-received"
         )
-        
 
     # Handle new invites, send cred offer
     if topic == "connections" and message["state"] == "response":
-        logger.info("***********************************************************")
-        logger.info(f"[CONNECTIONS==>>RESPONSE]  [SEQ 02]")
-        logger.info("***********************************************************")
         credential_definition_id = cache.get("credential_definition_id")
-        logger.info("[")
-        logger.info(credential_definition_id)
-        logger.info("]")
         assert credential_definition_id is not None
         connection_id = str(message["connection_id"])
 
-        logger.info("***********************************************************")
-        logger.info(f"[SEQ 02] state=connection-formed")
-        logger.info("***********************************************************")
         SessionState.objects.filter(connection_id=connection_id).update(
             state="connection-formed"
         )
@@ -186,64 +167,38 @@ def webhooks(request, topic):
 
         verification = get_object_or_404(Verification, connection_id=connection_id)
 
-        _request_body = {
+        request_body = {
             "auto_issue": True,
-            "connection_id": f"{connection_id}",
-            "cred_def_id": "8WDp23WFnJPUDjd77khhAG:3:CL:28951:CourrielCQEN",
-            # "cred_def_id": f"{credential_definition_id}",
+            "connection_id": connection_id,
+            "cred_def_id": credential_definition_id,
             "credential_preview": {
                 "attributes": [
                     {
                         "name": "email",
-                        "value": f"{verification.email}",
+                        "value": verification.email,
                         "mime-type": "text/plain",
                     },
                     {
                         "name": "time",
-                        "value": f"{str(datetime.utcnow())}",
+                        "value": str(datetime.utcnow()),
                         "mime-type": "text/plain",
                     },
                 ]
             },
         }
 
-        logger.info("<<<<*****************************>>>>")
-        logger.info(f" Avant stringfy: _request_body {_request_body}")
-        logger.info("<<<<*****************************>>>>")
-
-
-        request_body = json.dumps(_request_body)
-
-        logger.info("<<<<*****************************>>>>")
-        logger.info(f" Apres stringfy: request_body {request_body}")
-        logger.info("<<<<*****************************>>>>")
-        
         try:
-            logger.info("***********************************************************")
-            logger.info(f"[SEQ 02] /issue-credential/send-offer")
-            logger.info("***********************************************************")
-
             response = requests.post(
                 f"{AGENT_URL}/issue-credential/send-offer",headers={"x-api-key": API_KEY}, json=request_body
             )
             response.raise_for_status()
-
         except Exception:
             logger.exception("Error sending credential offer:")
-            logger.info("***********************************************************")
-            logger.info(f"[SEQ 02] state=offer-error")
-            logger.info("***********************************************************")
-            
             SessionState.objects.filter(connection_id=connection_id).update(
                 state="offer-error"
             )
         else:
-            logger.info("***********************************************************")
-            logger.info(f"[SEQ 02] offer-sent")
-            logger.info("***********************************************************")
-            
             SessionState.objects.filter(connection_id=connection_id).update(
-
                 state="offer-sent"
             )
 
@@ -251,9 +206,6 @@ def webhooks(request, topic):
 
     # Handle completion of credential issue
     if topic == "issue_credential" and message["state"] == "credential_issued":
-        logger.info("***********************************************************")
-        logger.info(f"[ISSUE_CREDENTIAL==>>CREDENTIAL_ISSUED]  [SEQ 03]")
-        logger.info("***********************************************************")
         credential_exchange_id = message["credential_exchange_id"]
         connection_id = message["connection_id"]
 
@@ -261,9 +213,7 @@ def webhooks(request, topic):
             "Completed credential issue for credential exchange "
             f"{credential_exchange_id} and connection {connection_id}"
         )
-        logger.info("***********************************************************")
-        logger.info(f"[SEQ 03] credential-issued")
-        logger.info("***********************************************************")
+
         SessionState.objects.filter(connection_id=connection_id).update(
             state="credential-issued"
         )
@@ -271,7 +221,5 @@ def webhooks(request, topic):
         return HttpResponse()
 
     logger.warning(f"Webhook for topic {topic} and state {message['state']} is not implemented")
-    logger.info("***********************************************************")
-    logger.info(f"[NOT IMPLEMENTED]  [SEQ 04]")
-    logger.info("***********************************************************")
     return HttpResponse()
+    
