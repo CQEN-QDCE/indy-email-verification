@@ -29,8 +29,8 @@ class EmailVerificationConfig(AppConfig):
 
         if cache.get("credential_definition_id") is None:
             schema_body = {
-                "schema_name": "verified-email",
-                "schema_version": "1.2.5",
+                "schema_name": "CQEN_Droit_Acces_Virtuel",
+                "schema_version": "0.5",
                 "attributes": ["email", "time"]
             }
 
