@@ -24,25 +24,16 @@ class EmailVerificationConfig(AppConfig):
         except ProgrammingError:
             return
 
-        logger.info(
-            f"================================================[F6015650] "
-        )
-        
-        cache.set("credential_definition_id", "8WDp23WFnJPUDjd77khhAG:3:CL:28844:Registre_Acces_Virtuel_CQEN", None)
-        
-        logger.info(
-            f"================================================[F6015650] "
-            f" credential definition {credential_definition_id}"
-            f" cache credential definition {cache.get(credential_definition_id)}"
-            f"================================================[F6015650] "
-        )
+        logger.info(f"adresse agent: {AGENT_URL}")
+        logger.info(f"api-key: {API_KEY}")
 
         if cache.get("credential_definition_id") is None:
             schema_body = {
-                "schema_name": "CQEN Droit Acces Virtuel",
-                "schema_version": "0.1",
-                "attributes": ["Email", "Time"]
+                "schema_name": "verified-email",
+                "schema_version": "1.2.5",
+                "attributes": ["email", "time"]
             }
+
             schema_response = requests.post(f"{AGENT_URL}/schemas", headers={"x-api-key": API_KEY}, json=schema_body)
 
             logger.info(schema_response.text)
