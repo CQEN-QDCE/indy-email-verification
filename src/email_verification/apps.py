@@ -25,7 +25,6 @@ class EmailVerificationConfig(AppConfig):
             return
 
         logger.info(f"adresse agent: {AGENT_URL}")
-        logger.info(f"api-key: {API_KEY}")
 
         if cache.get("credential_definition_id") is None:
             schema_body = {
