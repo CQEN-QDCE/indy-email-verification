@@ -108,18 +108,18 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-9 col-md-12">
-            <h1>Échange d'attestation en progrès </h1>
+            <h1>Échange d'attestation en cours </h1>
             <ul style="list-style: none;">
-              {% comment %} Demande de connection envoyé {% endcomment %}
+              {% comment %} Demande de connexion envoyé {% endcomment %}
               <li id="connection-request-sent">
-                <h2>Envoyer la demande de connection <span class="fa fa-spinner fa-spin"></span></h2>
+                <h2>Envoyer la demande de connexion <span class="fa fa-spinner fa-spin"></span></h2>
               </li>
 
-              {% comment %} Connection faite {% endcomment %}
+              {% comment %} Connexion faite {% endcomment %}
               <li id="connection-formed">
-                <h2>Connection Faite <span class="fa fa-check"></span></h2>
+                <h2>Connexion faite <span class="fa fa-check"></span></h2>
                 <p>
-                Maintenant vous avez une connection avec le service de verification de courriel du CQEN.
+                Maintenant vous avez une connexion avec le Service de vérification de courriel du CQEN.
                 </p>
               </li>
 
@@ -134,12 +134,14 @@
               <li id="credential-issued" style="display: none">
                 <h2>Attestation émise<span class="fa fa-check"></span></h2>
                 <p>
-                Merci <b id="email-placeholder"></b>. Vous avez accepté notre offre d'attestation. 
-                Nous avons émis votre attestation, qui peut être acceptée en utilisant votre agent mobile! 
+                  Merci <b id="email-placeholder"></b>, vous avez accepté notre offre d'attestation. 
+                  Nous vous avons émis une attestation qui est utilisable pour vous authentifier sur les 
+                  outils qui l'acceptent en utilisant votre application de portefeuille numérique sur 
+                  votre cellulaire! 
                 </p>
                 <p>
-                  Avez-vous besoin d'une application pour essayer votre attestation? 
-                  Utilisez l'application <a href="#">Port-E</a>.
+                  <!-- Avez-vous besoin d'une application pour essayer votre attestation? 
+                  Utilisez l'application <a href="#">Port-E</a>. -->
                 </p>
               </li>
 
