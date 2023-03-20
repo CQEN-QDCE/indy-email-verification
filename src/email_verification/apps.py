@@ -37,7 +37,8 @@ class EmailVerificationConfig(AppConfig):
 
             logger.info(schema_response.text)
             print >>sys.stderr, '**********************Goodbye, cruel world!**********************'
-            print("**********************Goodbye 2, cruel world!**********************", file=sys.stderr)
+            print >>sys.stderr, '**********************', schema_response.text ,'**********************'
+            print >>sys.stderr, '**********************Goodbye, cruel world!**********************'
 
             schema_response_body = schema_response.json()
             schema_id = schema_response_body["schema_id"]
