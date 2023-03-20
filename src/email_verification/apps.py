@@ -36,23 +36,32 @@ class EmailVerificationConfig(AppConfig):
             schema_response = requests.post(f"{AGENT_URL}/schemas", headers={"x-api-key": API_KEY}, json=schema_body)
 
             logger.info(schema_response.text)
-            print("**********************Goodbye 2, cruel world!**********************")
+            print("**********************Goodbye 1, cruel world!**********************")
 
             schema_response_body = schema_response.json()
+            print("**********************Goodbye 2, cruel world!**********************")
             schema_id = schema_response_body["schema_id"]
+            print("**********************Goodbye 3, cruel world!**********************")
 
             credential_definition_body = {"schema_id": schema_id}
+            print("**********************Goodbye 4, cruel world!**********************")
             credential_definition_response = requests.post(
                 f"{AGENT_URL}/credential-definitions", headers={"x-api-key": API_KEY}, json=credential_definition_body
             )
+            print("**********************Goodbye 5, cruel world!**********************")
 
             logger.info(credential_definition_response.text)
+            print("**********************Goodbye 6, cruel world!**********************")
 
             credential_definition_response_body = credential_definition_response.json()
+            print("**********************Goodbye 7, cruel world!**********************")
             credential_definition_id = credential_definition_response_body[
                 "credential_definition_id"
             ]
+            print("**********************Goodbye 8, cruel world!**********************")
 
             logger.info(f"cred def id: {credential_definition_id}")
+            print("**********************Goodbye 9, cruel world!**********************")
 
             cache.set("credential_definition_id", credential_definition_id, None)
+            print("**********************Goodbye 10, cruel world!**********************")
