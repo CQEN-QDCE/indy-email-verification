@@ -36,7 +36,9 @@ class EmailVerificationConfig(AppConfig):
             schema_response = requests.post(f"{AGENT_URL}/schemas", headers={"x-api-key": API_KEY}, json=schema_body)
 
             logger.info(schema_response.text)
-            print("**********************Goodbye 1, cruel world!**********************")
+            print("**********************Goodbye 1A, cruel world!**********************")
+            print(schema_response.text)
+            print("**********************Goodbye 1F, cruel world!**********************")
 
             schema_response_body = schema_response.json()
             print("**********************Goodbye 2, cruel world!**********************")
