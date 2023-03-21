@@ -57,8 +57,9 @@ class EmailVerificationConfig(AppConfig):
                 schema_id = schema_response_body["schema_id"]
                 credential_definition_body = {"schema_id": schema_id}
 
-
-            print("**********************Goodbye 3, cruel world!**********************")
+            print("**********************Goodbye 3A, cruel world!**********************")
+            print(schema_id)
+            print("**********************Goodbye 3F, cruel world!**********************")
             # https://exp-port-e-issuer-flihp-agent-admin.apps.exp.openshift.cqen.ca/credential-definitions/created?schema_id={{schemaId}}
             credential_definition_response = requests.get(f"{AGENT_URL}/credential-definitions/created?schema_id={schema_id[0]}", headers={"x-api-key": API_KEY})
             logger.info(credential_definition_response.text)
