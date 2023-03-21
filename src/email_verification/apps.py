@@ -26,50 +26,65 @@ class EmailVerificationConfig(AppConfig):
 
         logger.info(f"adresse agent: {AGENT_URL}")
 
-# test phil
+        # test phil
         #credential_definition_id = "FUKLxsjrYSHgScLbHuPTo4:3:CL:30685:RegistreAccesVirtuelCQEN"
 
         if cache.get("credential_definition_id") is None:
-            schema_body = {
-                "schema_name": "CQENDroitAccesVirtuel",
-                "schema_version": "0.1.10",
-                "attributes": ["email", "time"]
-            }
 
-            schema_response = requests.post(f"{AGENT_URL}/schemas", headers={"x-api-key": API_KEY}, json=schema_body)
+            print("**********************Goodbye 1, cruel world!**********************")
+            # https://exp-port-e-issuer-flihp-agent-admin.apps.exp.openshift.cqen.ca/schemas/created?schema_name={{schemaName}}&schema_version={{schemaVersion}}
+            schema_response = requests.get(f"{AGENT_URL}/schemas/created?schema_name=CQENDroitAccesVirtuel&schema_version=0.1.10", headers={"x-api-key": API_KEY})
 
             logger.info(schema_response.text)
-            print("**********************Goodbye 1A, cruel world!**********************")
-            print(schema_response.text)
-            print("**********************Goodbye 1F, cruel world!**********************")
-
             schema_response_body = schema_response.json()
+            schema_id = schema_response_body["schema_ids"]
+            credential_definition_body = {"schema_id": schema_id[0]}
+            logger.info(credential_definition_body.text)
+
             print("**********************Goodbye 2, cruel world!**********************")
-            schema_id = schema_response_body["schema_id"]
-            schema_id = "FUKLxsjrYSHgScLbHuPTo4:2:CQENDroitAccesVirtuel:0.1.5"
+            if len(schema_id) == 0:
+                print("**********************Goodbye 2A, cruel world!**********************")
+                schema_body = {
+                    "schema_name": "CQENDroitAccesVirtuel",
+                    "schema_version": "0.1.10",
+                    "attributes": ["email", "time"]
+                }
+
+                schema_response = requests.post(f"{AGENT_URL}/schemas", headers={"x-api-key": API_KEY}, json=schema_body)
+
+                logger.info(schema_response.text)
+                print(schema_response.text)
+                schema_response_body = schema_response.json()
+                schema_id = schema_response_body["schema_id"]
+                credential_definition_body = {"schema_id": schema_id}
+                logger.info(credential_definition_body.text)
+
 
             print("**********************Goodbye 3, cruel world!**********************")
-
-            credential_definition_body = {"schema_id": schema_id}
-            print("**********************Goodbye 4, cruel world!**********************")
-            credential_definition_response = requests.post(
-                f"{AGENT_URL}/credential-definitions", headers={"x-api-key": API_KEY}, json=credential_definition_body
-            )
-            print("**********************Goodbye 5, cruel world!**********************")
-
+            # https://exp-port-e-issuer-flihp-agent-admin.apps.exp.openshift.cqen.ca/credential-definitions/created?schema_id={{schemaId}}
+            credential_definition_response = requests.get(f"{AGENT_URL}/credential-definitions/created?schema_id={schema_id}", headers={"x-api-key": API_KEY})
             logger.info(credential_definition_response.text)
-            print("**********************Goodbye 6, cruel world!**********************")
-
             credential_definition_response_body = credential_definition_response.json()
-            print("**********************Goodbye 7, cruel world!**********************")
             credential_definition_id = credential_definition_response_body[
                 "credential_definition_id"
             ]
-            credential_definition_id = "FUKLxsjrYSHgScLbHuPTo4:3:CL:30685:RegistreAccesVirtuelCQEN"
-            print("**********************Goodbye 8, cruel world!**********************")
 
+            print("**********************Goodbye 4, cruel world!**********************")
+            if len(credential_definition_id) == 0:
+                print("**********************Goodbye 4A, cruel world!**********************")
+                credential_definition_response = requests.post(
+                    f"{AGENT_URL}/credential-definitions", headers={"x-api-key": API_KEY}, json=credential_definition_body
+                )
+
+                logger.info(credential_definition_response.text)
+                credential_definition_response_body = credential_definition_response.json()
+                credential_definition_id = credential_definition_response_body[
+                    "credential_definition_id"
+                ]
+
+            print("**********************Goodbye 5, cruel world!**********************")
             logger.info(f"cred def id: {credential_definition_id}")
-            print("**********************Goodbye 9, cruel world!**********************")
+            print("**********************Goodbye 6, cruel world!**********************")
 
             cache.set("credential_definition_id", credential_definition_id, None)
-            print("**********************Goodbye 10, cruel world!**********************")
+            print("**********************Goodbye 7, cruel world!**********************")
