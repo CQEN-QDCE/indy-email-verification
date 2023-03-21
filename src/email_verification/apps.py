@@ -39,7 +39,6 @@ class EmailVerificationConfig(AppConfig):
             schema_response_body = schema_response.json()
             schema_id = schema_response_body["schema_ids"]
             credential_definition_body = {"schema_id": schema_id[0]}
-            logger.info(credential_definition_body.text)
 
             print("**********************Goodbye 2, cruel world!**********************")
             if len(schema_id) == 0:
@@ -57,7 +56,6 @@ class EmailVerificationConfig(AppConfig):
                 schema_response_body = schema_response.json()
                 schema_id = schema_response_body["schema_id"]
                 credential_definition_body = {"schema_id": schema_id}
-                logger.info(credential_definition_body.text)
 
 
             print("**********************Goodbye 3, cruel world!**********************")
