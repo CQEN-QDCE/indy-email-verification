@@ -32,9 +32,10 @@ class EmailVerificationConfig(AppConfig):
         if cache.get("credential_definition_id") is None:
 
             print("**********************Goodbye 1, cruel world!**********************")
-            payload = {'schema_name': 'CQENDroitAccesVirtuel', 'schema_version': '0.1.10'}
+            payload = {'schema_name': 'CQENDroitAccesVirtuel', 'schema_version': '0.1.11'}
+            logger.info(payload)
             print(payload)
-            schema_response = requests.get(f"{AGENT_URL}/schemas/created?schema_name=CQENDroitAccesVirtuel&schema_version=0.1.10", headers={"x-api-key": API_KEY}, params=payload)
+            schema_response = requests.get(f"{AGENT_URL}/schemas/created", headers={"x-api-key": API_KEY}, params=payload)
 
             logger.info(schema_response.text)
             schema_response_body = schema_response.json()
@@ -46,7 +47,7 @@ class EmailVerificationConfig(AppConfig):
                 print("**********************Goodbye 2A, cruel world!**********************")
                 schema_body = {
                     "schema_name": "CQENDroitAccesVirtuel",
-                    "schema_version": "0.1.10",
+                    "schema_version": "0.1.11",
                     "attributes": ["email", "time"]
                 }
 
