@@ -89,6 +89,7 @@ class EmailVerificationConfig(AppConfig):
 
             print("**********************Goodbye 5, cruel world!**********************")
             logger.info(f"cred def id: {credential_definition_id}")
+            print(credential_definition_id)
             print("**********************Goodbye 6, cruel world!**********************")
 
             cache.set("credential_definition_id", credential_definition_id, None)
