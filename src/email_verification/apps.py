@@ -69,7 +69,7 @@ class EmailVerificationConfig(AppConfig):
             logger.info(credential_definition_response.text)
             credential_definition_response_body = credential_definition_response.json()
             tmp_credential_definition_id = credential_definition_response_body["credential_definition_ids"]
-            credential_definition_id = {"credential_definition_id": tmp_credential_definition_id[0]}
+            credential_definition_id = tmp_credential_definition_id[0]
 
             print("**********************Goodbye 4, cruel world!**********************")
             if len(tmp_credential_definition_id) == 0:
