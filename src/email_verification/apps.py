@@ -32,8 +32,6 @@ class EmailVerificationConfig(AppConfig):
         if cache.get("credential_definition_id") is None:
 
             print("**********************Goodbye 1, cruel world!**********************")
-            # https://exp-port-e-issuer-flihp-agent-admin.apps.exp.openshift.cqen.ca/schemas/created?schema_name={{schemaName}}&schema_version={{schemaVersion}}
-            #schema_response = requests.get(f"{AGENT_URL}/schemas/created?schema_name=CQENDroitAccesVirtuel&schema_version=0.1.10", headers={"x-api-key": API_KEY})
             payload = {'schema_name': 'CQENDroitAccesVirtuel', 'schema_version': '0.1.10'}
             print(payload)
             schema_response = requests.get(f"{AGENT_URL}/schemas/created?schema_name=CQENDroitAccesVirtuel&schema_version=0.1.10", headers={"x-api-key": API_KEY}, params=payload)
@@ -68,8 +66,6 @@ class EmailVerificationConfig(AppConfig):
             print(payload)
             credential_definition_response = requests.get(f"{AGENT_URL}/credential-definitions/created", headers={"x-api-key": API_KEY}, params=payload)
             print("**********************Goodbye 3G, cruel world!**********************")
-            # https://exp-port-e-issuer-flihp-agent-admin.apps.exp.openshift.cqen.ca/credential-definitions/created?schema_id={{schemaId}}
-            # credential_definition_response = requests.get(f"{AGENT_URL}/credential-definitions/created?schema_id={schema_id[0]}", headers={"x-api-key": API_KEY})
             logger.info(credential_definition_response.text)
             credential_definition_response_body = credential_definition_response.json()
             credential_definition_id = credential_definition_response_body["credential_definition_ids"]
@@ -90,6 +86,7 @@ class EmailVerificationConfig(AppConfig):
             print("**********************Goodbye 5, cruel world!**********************")
             logger.info(f"cred def id: {credential_definition_id}")
             print(credential_definition_id)
+            credential_definition_id = "FUKLxsjrYSHgScLbHuPTo4:3:CL:30728:default"
             print("**********************Goodbye 6, cruel world!**********************")
 
             cache.set("credential_definition_id", credential_definition_id, None)
