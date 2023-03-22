@@ -33,7 +33,10 @@ class EmailVerificationConfig(AppConfig):
 
             print("**********************Goodbye 1, cruel world!**********************")
             # https://exp-port-e-issuer-flihp-agent-admin.apps.exp.openshift.cqen.ca/schemas/created?schema_name={{schemaName}}&schema_version={{schemaVersion}}
-            schema_response = requests.get(f"{AGENT_URL}/schemas/created?schema_name=CQENDroitAccesVirtuel&schema_version=0.1.10", headers={"x-api-key": API_KEY})
+            #schema_response = requests.get(f"{AGENT_URL}/schemas/created?schema_name=CQENDroitAccesVirtuel&schema_version=0.1.10", headers={"x-api-key": API_KEY})
+            payload = {'schema_name': 'CQENDroitAccesVirtuel', 'schema_version': '0.1.10'}
+            print(payload)
+            schema_response = requests.get(f"{AGENT_URL}/schemas/created?schema_name=CQENDroitAccesVirtuel&schema_version=0.1.10", headers={"x-api-key": API_KEY}, params=payload)
 
             logger.info(schema_response.text)
             schema_response_body = schema_response.json()
