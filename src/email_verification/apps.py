@@ -40,8 +40,7 @@ class EmailVerificationConfig(AppConfig):
             logger.info(schema_response.text)
             schema_response_body = schema_response.json()
             schema_id = schema_response_body["schema_ids"]
-            credential_definition_body = {"schema_id": schema_id[0]}
-
+            
             print("**********************Goodbye 2, cruel world!**********************")
             if len(schema_id) == 0:
                 print("**********************Goodbye 2A, cruel world!**********************")
@@ -58,6 +57,8 @@ class EmailVerificationConfig(AppConfig):
                 schema_response_body = schema_response.json()
                 schema_id = schema_response_body["schema_id"]
                 credential_definition_body = {"schema_id": schema_id}
+            else:
+                credential_definition_body = {"schema_id": schema_id[0]}
 
             print("**********************Goodbye 3A, cruel world!**********************")
             print(credential_definition_body)
@@ -70,7 +71,6 @@ class EmailVerificationConfig(AppConfig):
             logger.info(credential_definition_response.text)
             credential_definition_response_body = credential_definition_response.json()
             tmp_credential_definition_id = credential_definition_response_body["credential_definition_ids"]
-            credential_definition_id = tmp_credential_definition_id[0]
 
             print("**********************Goodbye 4, cruel world!**********************")
             if len(tmp_credential_definition_id) == 0:
@@ -82,6 +82,8 @@ class EmailVerificationConfig(AppConfig):
                 logger.info(credential_definition_response.text)
                 credential_definition_response_body = credential_definition_response.json()
                 credential_definition_id = credential_definition_response_body["credential_definition_id"]
+            else:
+                credential_definition_id = tmp_credential_definition_id[0]
 
             print("**********************Goodbye 5, cruel world!**********************")
             logger.info(f"cred def id: {credential_definition_id}")
