@@ -58,6 +58,7 @@ class EmailVerificationConfig(AppConfig):
                 credential_definition_body = {"schema_id": schema_id}
 
             print("**********************Goodbye 3A, cruel world!**********************")
+            print(credential_definition_body)
             print(schema_id)
             print("**********************Goodbye 3F, cruel world!**********************")
             payload = {'schema_id': schema_id}
@@ -68,9 +69,7 @@ class EmailVerificationConfig(AppConfig):
             # credential_definition_response = requests.get(f"{AGENT_URL}/credential-definitions/created?schema_id={schema_id[0]}", headers={"x-api-key": API_KEY})
             logger.info(credential_definition_response.text)
             credential_definition_response_body = credential_definition_response.json()
-            credential_definition_id = credential_definition_response_body[
-                "credential_definition_id"
-            ]
+            credential_definition_id = credential_definition_response_body["credential_definition_ids"]
 
             print("**********************Goodbye 4, cruel world!**********************")
             if len(credential_definition_id) == 0:
