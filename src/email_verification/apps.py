@@ -26,24 +26,23 @@ class EmailVerificationConfig(AppConfig):
 
         logger.info(f"adresse agent: {AGENT_URL}")
 
-        # test phil
-        #credential_definition_id = "FUKLxsjrYSHgScLbHuPTo4:3:CL:30685:RegistreAccesVirtuelCQEN"
 
         if cache.get("credential_definition_id") is None:
 
-            print("**********************Goodbye 1, cruel world!**********************")
+            # N'oubliez pas de changer les attributs pour votre cas d'utilisation
+            # Don't forget to change the attributes for your use case
             payload = {'schema_name': 'CQENDroitAccesVirtuel', 'schema_version': '0.1.11'}
             logger.info(payload)
-            print(payload)
-            schema_response = requests.get(f"{AGENT_URL}/schemas/created", headers={"x-api-key": API_KEY}, params=payload)
 
+            schema_response = requests.get(f"{AGENT_URL}/schemas/created", headers={"x-api-key": API_KEY}, params=payload)
             logger.info(schema_response.text)
+
             schema_response_body = schema_response.json()
             schema_id = schema_response_body["schema_ids"]
             
-            print("**********************Goodbye 2, cruel world!**********************")
             if len(schema_id) == 0:
-                print("**********************Goodbye 2A, cruel world!**********************")
+                # N'oubliez pas de changer les attributs pour votre cas d'utilisation
+                # Don't forget to change the attributes for your use case
                 schema_body = {
                     "schema_name": "CQENDroitAccesVirtuel",
                     "schema_version": "0.1.11",
@@ -51,47 +50,32 @@ class EmailVerificationConfig(AppConfig):
                 }
 
                 schema_response = requests.post(f"{AGENT_URL}/schemas", headers={"x-api-key": API_KEY}, json=schema_body)
-
                 logger.info(schema_response.text)
-                print(schema_response.text)
+
                 schema_response_body = schema_response.json()
                 schema_id = schema_response_body["schema_id"]
                 credential_definition_body = {"schema_id": schema_id}
             else:
                 credential_definition_body = {"schema_id": schema_id[0]}
 
-            print("**********************Goodbye 3A, cruel world!**********************")
-            print(credential_definition_body)
-            print(schema_id)
-            print("**********************Goodbye 3F, cruel world!**********************")
             payload = {'schema_id': schema_id}
-            print(payload)
+            logger.info(payload)
+
             credential_definition_response = requests.get(f"{AGENT_URL}/credential-definitions/created", headers={"x-api-key": API_KEY}, params=payload)
-            print("**********************Goodbye 3G, cruel world!**********************")
             logger.info(credential_definition_response.text)
+            
             credential_definition_response_body = credential_definition_response.json()
             tmp_credential_definition_id = credential_definition_response_body["credential_definition_ids"]
 
-            print("**********************Goodbye 4, cruel world!**********************")
             if len(tmp_credential_definition_id) == 0:
-                print("**********************Goodbye 4A, cruel world!**********************")
-                credential_definition_response = requests.post(
-                    f"{AGENT_URL}/credential-definitions", headers={"x-api-key": API_KEY}, json=credential_definition_body
-                )
-
+                credential_definition_response = requests.post(f"{AGENT_URL}/credential-definitions", headers={"x-api-key": API_KEY}, json=credential_definition_body)
                 logger.info(credential_definition_response.text)
+
                 credential_definition_response_body = credential_definition_response.json()
                 credential_definition_id = credential_definition_response_body["credential_definition_id"]
             else:
                 credential_definition_id = tmp_credential_definition_id[0]
 
-            print("**********************Goodbye 5, cruel world!**********************")
             logger.info(f"cred def id: {credential_definition_id}")
-            print(credential_definition_id)
-            #credential_definition_id = "FUKLxsjrYSHgScLbHuPTo4:3:CL:30728:default"
-            #print("2")
-            #print(credential_definition_id)
-            print("**********************Goodbye 6, cruel world!**********************")
 
             cache.set("credential_definition_id", credential_definition_id, None)
-            print("**********************Goodbye 7, cruel world!**********************")
