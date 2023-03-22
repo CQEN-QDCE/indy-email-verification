@@ -69,6 +69,7 @@ class EmailVerificationConfig(AppConfig):
             logger.info(credential_definition_response.text)
             credential_definition_response_body = credential_definition_response.json()
             credential_definition_id = credential_definition_response_body["credential_definition_ids"]
+            #credential_definition_id = {"credential_definition_ids": tmp_credential_definition_id[0]}
 
             print("**********************Goodbye 4, cruel world!**********************")
             if len(credential_definition_id) == 0:
@@ -79,14 +80,14 @@ class EmailVerificationConfig(AppConfig):
 
                 logger.info(credential_definition_response.text)
                 credential_definition_response_body = credential_definition_response.json()
-                credential_definition_id = credential_definition_response_body[
-                    "credential_definition_id"
-                ]
+                credential_definition_id = credential_definition_response_body["credential_definition_id"]
 
             print("**********************Goodbye 5, cruel world!**********************")
             logger.info(f"cred def id: {credential_definition_id}")
             print(credential_definition_id)
             credential_definition_id = "FUKLxsjrYSHgScLbHuPTo4:3:CL:30728:default"
+            print("2")
+            print(credential_definition_id)
             print("**********************Goodbye 6, cruel world!**********************")
 
             cache.set("credential_definition_id", credential_definition_id, None)
