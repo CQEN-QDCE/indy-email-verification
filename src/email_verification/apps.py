@@ -68,11 +68,11 @@ class EmailVerificationConfig(AppConfig):
             print("**********************Goodbye 3G, cruel world!**********************")
             logger.info(credential_definition_response.text)
             credential_definition_response_body = credential_definition_response.json()
-            credential_definition_id = credential_definition_response_body["credential_definition_ids"]
-            #credential_definition_id = {"credential_definition_ids": tmp_credential_definition_id[0]}
+            tmp_credential_definition_id = credential_definition_response_body["credential_definition_ids"]
+            credential_definition_id = {"credential_definition_id": tmp_credential_definition_id[0]}
 
             print("**********************Goodbye 4, cruel world!**********************")
-            if len(credential_definition_id) == 0:
+            if len(tmp_credential_definition_id) == 0:
                 print("**********************Goodbye 4A, cruel world!**********************")
                 credential_definition_response = requests.post(
                     f"{AGENT_URL}/credential-definitions", headers={"x-api-key": API_KEY}, json=credential_definition_body
