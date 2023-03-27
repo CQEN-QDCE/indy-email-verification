@@ -60,12 +60,12 @@ def submit(request):
             email_html = template.render({"redirect_url": redirect_url}, request)
 
             send_mail(
-                "Invitation du Service de Vérification de Courriel du CQEN",
+                "Invitation du Service de vérification de courriel du CQEN",
                 (
                     "Follow this link to connect with our "
                     f"verification service: {redirect_url}"
                 ),
-                "Service de Vérification de Courriel <ne-pas-repondre@asea.cqen.ca>",
+                "Service de vérification de courriel du CQEN <ne-pas-repondre@asea.cqen.ca>",
                 [email],
                 fail_silently=False,
                 html_message=email_html,
