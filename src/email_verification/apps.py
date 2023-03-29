@@ -65,7 +65,7 @@ class EmailVerificationConfig(AppConfig):
                 credential_definition_body = {"schema_id": schema_id}
             else:
                 print("******************* Goodbye, Cruel World! 5 *******************")
-                credential_definition_body = {"schema_id": schema_id}
+                credential_definition_body = {"schema_id": schema_id['id']}
 
             print("******************* Goodbye, Cruel World! 6A *******************")
             print(credential_definition_body)
