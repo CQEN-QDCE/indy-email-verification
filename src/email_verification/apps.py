@@ -33,22 +33,12 @@ class EmailVerificationConfig(AppConfig):
             # Does your schema exist on the blockchain
             schema_response = requests.get(f"{AGENT_URL}/schemas/FUKLxsjrYSHgScLbHuPTo4%3A2%3ACQENDroitAccesVirtuel%3A0.1", headers={"x-api-key": API_KEY})
             logger.info(schema_response.text)
-            print("******************* Goodbye, Cruel World! 1A *******************")
-            print(schema_response.text)
-            print("******************* Goodbye, Cruel World! 1F *******************")
             schema_response_body = schema_response.json()
-            print("******************* Goodbye, Cruel World! 2A *******************")
-            print(schema_response_body)
-            print("******************* Goodbye, Cruel World! 2F *******************")
             schema_id = schema_response_body["schema"]
-            print("******************* Goodbye, Cruel World! 3A *******************")
-            print(schema_id)
-            print("******************* Goodbye, Cruel World! 3F *******************")
             
             # Sinon, créer le schéma avec votre agent
             # If not, create the schema with your agent
             if len(schema_id) == 0:
-                print("******************* Goodbye, Cruel World! 4 *******************")
                 # N'oubliez pas de changer les attributs pour votre cas d'utilisation
                 # Don't forget to change the attributes for your use case
                 schema_body = {
@@ -64,20 +54,20 @@ class EmailVerificationConfig(AppConfig):
                 schema_id = schema_response_body["schema_id"]
                 payload = {"schema_id": schema_id}
             else:
-                print("******************* Goodbye, Cruel World! 5 *******************")
                 payload = {"schema_id": schema_id['id']}
 
-            print("******************* Goodbye, Cruel World! 6 *******************")
+            # Est-ce que votre credential definition existe sur votre agent aries
+            # Does your credential definition exist on your aries agent
             logger.info(payload)
-
             credential_definition_response = requests.get(f"{AGENT_URL}/credential-definitions/created", headers={"x-api-key": API_KEY}, params=payload)
             logger.info(credential_definition_response.text)
             
             credential_definition_response_body = credential_definition_response.json()
             tmp_credential_definition_id = credential_definition_response_body["credential_definition_ids"]
 
+            # Sinon, créer le credential definition avec votre agent
+            # Otherwise, create the credential definition with your agent
             if len(tmp_credential_definition_id) == 0:
-                print("******************* Goodbye, Cruel World! 7 *******************")
                 # N'oubliez pas de changer les attributs pour votre cas d'utilisation
                 # Don't forget to change the attributes for your use case
                 credential_definition_body = {
@@ -92,11 +82,8 @@ class EmailVerificationConfig(AppConfig):
                 credential_definition_response_body = credential_definition_response.json()
                 credential_definition_id = credential_definition_response_body["credential_definition_id"]
             else:
-                print("******************* Goodbye, Cruel World! 8 *******************")
                 credential_definition_id = tmp_credential_definition_id[0]
 
-                print("******************* Goodbye, Cruel World! 9 *******************")
-#            credential_definition_id = "FUKLxsjrYSHgScLbHuPTo4:3:CL:30781:default"
             logger.info(f"cred def id: {credential_definition_id}")
 
             cache.set("credential_definition_id", credential_definition_id, None)
