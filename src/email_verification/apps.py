@@ -28,54 +28,63 @@ class EmailVerificationConfig(AppConfig):
 
 
         if cache.get("credential_definition_id") is None:
-
-            # N'oubliez pas de changer les attributs pour votre cas d'utilisation
-            # Don't forget to change the attributes for your use case
-            payload = {'schema_name': 'CQENDroitAccesVirtuel', 'schema_version': '0.1.11'}
-            logger.info(payload)
-
-            schema_response = requests.get(f"{AGENT_URL}/schemas/created", headers={"x-api-key": API_KEY}, params=payload)
+    
+            # Est-ce que votre schéma existe sur la chaîne de blocs
+            # Does your schema exist on the blockchain
+            schema_id = {"FUKLxsjrYSHgScLbHuPTo4:2:CQENDroitAccesVirtuel:0.1"}
+            logger.info(schema_id)
+            schema_response = requests.get(f"{AGENT_URL}/schemas/{schema_id}", headers={"x-api-key": API_KEY})
             logger.info(schema_response.text)
-
+            print("******************* Goodbye, Cruel World! 1A *******************")
+            print(schema_response.text)
+            print("******************* Goodbye, Cruel World! 1F *******************")
             schema_response_body = schema_response.json()
-            schema_id = schema_response_body["schema_ids"]
+            print("******************* Goodbye, Cruel World! 2A *******************")
+            print(schema_response_body)
+            print("******************* Goodbye, Cruel World! 2F *******************")
+            schema_id = schema_response_body["schema"]
+            print("******************* Goodbye, Cruel World! 3A *******************")
+            print(schema_id)
+            print("******************* Goodbye, Cruel World! 3F *******************")
             
-            if len(schema_id) == 0:
-                # N'oubliez pas de changer les attributs pour votre cas d'utilisation
-                # Don't forget to change the attributes for your use case
-                schema_body = {
-                    "schema_name": "CQENDroitAccesVirtuel",
-                    "schema_version": "0.1.11",
-                    "attributes": ["email", "time"]
-                }
+            # Sinon, créer le schéma avec votre agent
+            # If not, create the schema with your agent
+#            if len(schema_id) == 0:
+#                # N'oubliez pas de changer les attributs pour votre cas d'utilisation
+#                # Don't forget to change the attributes for your use case
+#                schema_body = {
+#                    "schema_name": "CQENDroitAccesVirtuel",
+#                    "schema_version": "0.1",
+#                    "attributes": ["email", "time"]
+#                }
 
-                schema_response = requests.post(f"{AGENT_URL}/schemas", headers={"x-api-key": API_KEY}, json=schema_body)
-                logger.info(schema_response.text)
+#                schema_response = requests.post(f"{AGENT_URL}/schemas", headers={"x-api-key": API_KEY}, json=schema_body)
+#                logger.info(schema_response.text)
 
-                schema_response_body = schema_response.json()
-                schema_id = schema_response_body["schema_id"]
-                credential_definition_body = {"schema_id": schema_id}
-            else:
-                credential_definition_body = {"schema_id": schema_id[0]}
+#                schema_response_body = schema_response.json()
+#                schema_id = schema_response_body["schema_id"]
+#                credential_definition_body = {"schema_id": schema_id}
+#            else:
+#                credential_definition_body = {"schema_id": schema_id[0]}
 
-            payload = {'schema_id': schema_id}
-            logger.info(payload)
+#            payload = {'schema_id': schema_id}
+#            logger.info(payload)
 
-            credential_definition_response = requests.get(f"{AGENT_URL}/credential-definitions/created", headers={"x-api-key": API_KEY}, params=payload)
-            logger.info(credential_definition_response.text)
+#            credential_definition_response = requests.get(f"{AGENT_URL}/credential-definitions/created", headers={"x-api-key": API_KEY}, params=payload)
+#            logger.info(credential_definition_response.text)
             
-            credential_definition_response_body = credential_definition_response.json()
-            tmp_credential_definition_id = credential_definition_response_body["credential_definition_ids"]
+#            credential_definition_response_body = credential_definition_response.json()
+#            tmp_credential_definition_id = credential_definition_response_body["credential_definition_ids"]
 
-            if len(tmp_credential_definition_id) == 0:
-                credential_definition_response = requests.post(f"{AGENT_URL}/credential-definitions", headers={"x-api-key": API_KEY}, json=credential_definition_body)
-                logger.info(credential_definition_response.text)
+#            if len(tmp_credential_definition_id) == 0:
+#                credential_definition_response = requests.post(f"{AGENT_URL}/credential-definitions", headers={"x-api-key": API_KEY}, json=credential_definition_body)
+#                logger.info(credential_definition_response.text)
 
-                credential_definition_response_body = credential_definition_response.json()
-                credential_definition_id = credential_definition_response_body["credential_definition_id"]
-            else:
-                credential_definition_id = tmp_credential_definition_id[0]
-
+#                credential_definition_response_body = credential_definition_response.json()
+#                credential_definition_id = credential_definition_response_body["credential_definition_id"]
+#            else:
+#                credential_definition_id = tmp_credential_definition_id[0]
+            credential_definition_id = "FUKLxsjrYSHgScLbHuPTo4:3:CL:30781:default"
             logger.info(f"cred def id: {credential_definition_id}")
 
             cache.set("credential_definition_id", credential_definition_id, None)
