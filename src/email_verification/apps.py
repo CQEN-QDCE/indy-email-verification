@@ -83,7 +83,7 @@ class EmailVerificationConfig(AppConfig):
                 credential_definition_body = {
                     "revocation_registry_size": 10000,
                     "schema_id": "FUKLxsjrYSHgScLbHuPTo4:2:CQENDroitAccesVirtuel:0.1",
-                    "support_revocation": true,
+                    "support_revocation": "true",
                     "tag": "RegistreAccesVirtuelCQEN-0.1.0"
                 }
                 credential_definition_response = requests.post(f"{AGENT_URL}/credential-definitions", headers={"x-api-key": API_KEY}, json=credential_definition_body)
