@@ -62,24 +62,22 @@ class EmailVerificationConfig(AppConfig):
 
                 schema_response_body = schema_response.json()
                 schema_id = schema_response_body["schema_id"]
-                credential_definition_body = {"schema_id": schema_id}
+                payload = {"schema_id": schema_id}
             else:
                 print("******************* Goodbye, Cruel World! 5 *******************")
-                credential_definition_body = {"schema_id": schema_id['id']}
+                payload = {"schema_id": schema_id['id']}
 
-            print("******************* Goodbye, Cruel World! 6A *******************")
-            print(credential_definition_body)
-            print("******************* Goodbye, Cruel World! 6F *******************")
-#            payload = {'schema_id': schema_id}
-#            logger.info(payload)
+            print("******************* Goodbye, Cruel World! 6 *******************")
+            logger.info(payload)
 
-#            credential_definition_response = requests.get(f"{AGENT_URL}/credential-definitions/created", headers={"x-api-key": API_KEY}, params=payload)
-#            logger.info(credential_definition_response.text)
+            credential_definition_response = requests.get(f"{AGENT_URL}/credential-definitions/created", headers={"x-api-key": API_KEY}, params=payload)
+            logger.info(credential_definition_response.text)
             
-#            credential_definition_response_body = credential_definition_response.json()
-#            tmp_credential_definition_id = credential_definition_response_body["credential_definition_ids"]
+            credential_definition_response_body = credential_definition_response.json()
+            tmp_credential_definition_id = credential_definition_response_body["credential_definition_ids"]
 
-#            if len(tmp_credential_definition_id) == 0:
+            if len(tmp_credential_definition_id) == 0:
+                print("******************* Goodbye, Cruel World! 7 *******************")
 #                credential_definition_response = requests.post(f"{AGENT_URL}/credential-definitions", headers={"x-api-key": API_KEY}, json=credential_definition_body)
 #                logger.info(credential_definition_response.text)
 
