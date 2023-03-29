@@ -31,9 +31,7 @@ class EmailVerificationConfig(AppConfig):
     
             # Est-ce que votre schéma existe sur la chaîne de blocs
             # Does your schema exist on the blockchain
-            schema_id = {"FUKLxsjrYSHgScLbHuPTo4%3A2%3ACQENDroitAccesVirtuel%3A0.1"}
-            logger.info(schema_id)
-            schema_response = requests.get(f"{AGENT_URL}/schemas/{schema_id}", headers={"x-api-key": API_KEY})
+            schema_response = requests.get(f"{AGENT_URL}/schemas/FUKLxsjrYSHgScLbHuPTo4%3A2%3ACQENDroitAccesVirtuel%3A0.1", headers={"x-api-key": API_KEY})
             logger.info(schema_response.text)
             print("******************* Goodbye, Cruel World! 1A *******************")
             print(schema_response.text)
