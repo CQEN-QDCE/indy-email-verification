@@ -47,24 +47,29 @@ class EmailVerificationConfig(AppConfig):
             
             # Sinon, créer le schéma avec votre agent
             # If not, create the schema with your agent
-#            if len(schema_id) == 0:
-#                # N'oubliez pas de changer les attributs pour votre cas d'utilisation
-#                # Don't forget to change the attributes for your use case
-#                schema_body = {
-#                    "schema_name": "CQENDroitAccesVirtuel",
-#                    "schema_version": "0.1",
-#                    "attributes": ["email", "time"]
-#                }
+            if len(schema_id) == 0:
+                print("******************* Goodbye, Cruel World! 4 *******************")
+                # N'oubliez pas de changer les attributs pour votre cas d'utilisation
+                # Don't forget to change the attributes for your use case
+                schema_body = {
+                    "schema_name": "CQENDroitAccesVirtuel",
+                    "schema_version": "0.1",
+                    "attributes": ["email", "time"]
+                }
 
-#                schema_response = requests.post(f"{AGENT_URL}/schemas", headers={"x-api-key": API_KEY}, json=schema_body)
-#                logger.info(schema_response.text)
+                schema_response = requests.post(f"{AGENT_URL}/schemas", headers={"x-api-key": API_KEY}, json=schema_body)
+                logger.info(schema_response.text)
 
-#                schema_response_body = schema_response.json()
-#                schema_id = schema_response_body["schema_id"]
-#                credential_definition_body = {"schema_id": schema_id}
-#            else:
-#                credential_definition_body = {"schema_id": schema_id[0]}
+                schema_response_body = schema_response.json()
+                schema_id = schema_response_body["schema_id"]
+                credential_definition_body = {"schema_id": schema_id}
+            else:
+                print("******************* Goodbye, Cruel World! 5 *******************")
+                credential_definition_body = {"schema_id": schema_id[0]}
 
+            print("******************* Goodbye, Cruel World! 6A *******************")
+            print(credential_definition_body)
+            print("******************* Goodbye, Cruel World! 6F *******************")
 #            payload = {'schema_id': schema_id}
 #            logger.info(payload)
 
