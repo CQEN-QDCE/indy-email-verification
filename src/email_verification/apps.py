@@ -78,14 +78,25 @@ class EmailVerificationConfig(AppConfig):
 
             if len(tmp_credential_definition_id) == 0:
                 print("******************* Goodbye, Cruel World! 7 *******************")
-#                credential_definition_response = requests.post(f"{AGENT_URL}/credential-definitions", headers={"x-api-key": API_KEY}, json=credential_definition_body)
-#                logger.info(credential_definition_response.text)
+                # N'oubliez pas de changer les attributs pour votre cas d'utilisation
+                # Don't forget to change the attributes for your use case
+                credential_definition_body = {
+                    "revocation_registry_size": 10000,
+                    "schema_id": "FUKLxsjrYSHgScLbHuPTo4:2:CQENDroitAccesVirtuel:0.1",
+                    "support_revocation": true,
+                    "tag": "RegistreAccesVirtuelCQEN-0.1.0"
+                }
+                credential_definition_response = requests.post(f"{AGENT_URL}/credential-definitions", headers={"x-api-key": API_KEY}, json=credential_definition_body)
+                logger.info(credential_definition_response.text)
 
-#                credential_definition_response_body = credential_definition_response.json()
-#                credential_definition_id = credential_definition_response_body["credential_definition_id"]
-#            else:
-#                credential_definition_id = tmp_credential_definition_id[0]
-            credential_definition_id = "FUKLxsjrYSHgScLbHuPTo4:3:CL:30781:default"
+                credential_definition_response_body = credential_definition_response.json()
+                credential_definition_id = credential_definition_response_body["credential_definition_id"]
+            else:
+                print("******************* Goodbye, Cruel World! 8 *******************")
+                credential_definition_id = tmp_credential_definition_id[0]
+
+                print("******************* Goodbye, Cruel World! 9 *******************")
+#            credential_definition_id = "FUKLxsjrYSHgScLbHuPTo4:3:CL:30781:default"
             logger.info(f"cred def id: {credential_definition_id}")
 
             cache.set("credential_definition_id", credential_definition_id, None)
