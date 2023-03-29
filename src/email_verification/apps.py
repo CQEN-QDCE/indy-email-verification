@@ -40,7 +40,7 @@ class EmailVerificationConfig(AppConfig):
             print("******************* Goodbye, Cruel World! 2A *******************")
             print(schema_response_body)
             print("******************* Goodbye, Cruel World! 2F *******************")
-            schema_id = schema_response_body["schema"]
+            schema_id = schema_response_body["id"]
             print("******************* Goodbye, Cruel World! 3A *******************")
             print(schema_id)
             print("******************* Goodbye, Cruel World! 3F *******************")
@@ -65,7 +65,7 @@ class EmailVerificationConfig(AppConfig):
                 credential_definition_body = {"schema_id": schema_id}
             else:
                 print("******************* Goodbye, Cruel World! 5 *******************")
-                credential_definition_body = {"schema_id": schema_id[0]}
+                credential_definition_body = {"schema_id": schema_id}
 
             print("******************* Goodbye, Cruel World! 6A *******************")
             print(credential_definition_body)
