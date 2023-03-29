@@ -40,7 +40,7 @@ class EmailVerificationConfig(AppConfig):
             print("******************* Goodbye, Cruel World! 2A *******************")
             print(schema_response_body)
             print("******************* Goodbye, Cruel World! 2F *******************")
-            schema_id = schema_response_body["id"]
+            schema_id = schema_response_body["schema"]
             print("******************* Goodbye, Cruel World! 3A *******************")
             print(schema_id)
             print("******************* Goodbye, Cruel World! 3F *******************")
