@@ -35,10 +35,13 @@ class EmailVerificationConfig(AppConfig):
             logger.info(schema_response.text)
             schema_response_body = schema_response.json()
             schema_id = schema_response_body["schema"]
-            
+            print("**********************************")
+            print(schema_id)
+            print("**********************************")
             # Sinon, créer le schéma avec votre agent
             # If not, create the schema with your agent
-            if len(schema_id) == 0:
+            #if len(schema_id) == 0:
+            if schema_id is None:
                 # N'oubliez pas de changer les attributs pour votre cas d'utilisation
                 # Don't forget to change the attributes for your use case
                 schema_body = {
