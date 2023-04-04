@@ -187,39 +187,54 @@ def webhooks(request, topic):
             },
         }
 
-        try:
-            response = requests.post(
-                f"{AGENT_URL}/issue-credential/send-offer",headers={"x-api-key": API_KEY}, json=request_body
-            )
-            response.raise_for_status()
-        except Exception:
-            logger.exception("Error sending credential offer:")
-            SessionState.objects.filter(connection_id=connection_id).update(
-                state="offer-error"
-            )
-        else:
-            SessionState.objects.filter(connection_id=connection_id).update(
-                state="offer-sent"
-            )
+        print("****************************** Goodbye, cruel world 1 ******************************")
+        print(request_body)
+        print("****************************** Goodbye, cruel world 2 ******************************")
 
+        try:
+            print("****************************** Goodbye, cruel world 3 ******************************")
+            response = requests.post(f"{AGENT_URL}/issue-credential/send-offer",headers={"x-api-key": API_KEY}, json=request_body)
+            print("****************************** Goodbye, cruel world 4 ******************************")
+            print(response)
+            response.raise_for_status()
+            print("****************************** Goodbye, cruel world 5 ******************************")
+            print(response.raise_for_status())
+        except Exception:
+            print("****************************** Goodbye, cruel world 6 ******************************")
+            logger.exception("Error sending credential offer:")
+            print("****************************** Goodbye, cruel world 7 ******************************")
+            SessionState.objects.filter(connection_id=connection_id).update(state="offer-error")
+            print("****************************** Goodbye, cruel world 8 ******************************")
+        else:
+            print("****************************** Goodbye, cruel world 9 ******************************")
+            SessionState.objects.filter(connection_id=connection_id).update(state="offer-sent")
+            print("****************************** Goodbye, cruel world 10 ******************************")
+
+        print("****************************** Goodbye, cruel world 11 ******************************")
         return HttpResponse()
 
     # Handle completion of credential issue
     if topic == "issue_credential" and message["state"] == "credential_issued":
+        print("****************************** Goodbye, cruel world 12 ******************************")
         credential_exchange_id = message["credential_exchange_id"]
+        print("****************************** Goodbye, cruel world 13 ******************************")
         connection_id = message["connection_id"]
 
+        print("****************************** Goodbye, cruel world 14 ******************************")
         logger.info(
             "Completed credential issue for credential exchange "
             f"{credential_exchange_id} and connection {connection_id}"
         )
 
+        print("****************************** Goodbye, cruel world 15 ******************************")
         SessionState.objects.filter(connection_id=connection_id).update(
             state="credential-issued"
         )
 
+        print("****************************** Goodbye, cruel world 16 ******************************")
         return HttpResponse()
 
+    print("****************************** Goodbye, cruel world 17 ******************************")
     logger.warning(f"Webhook for topic {topic} and state {message['state']} is not implemented")
     return HttpResponse()
     
