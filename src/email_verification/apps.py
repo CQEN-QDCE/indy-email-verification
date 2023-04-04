@@ -31,7 +31,7 @@ class EmailVerificationConfig(AppConfig):
     
             # Est-ce que votre schéma existe sur la chaîne de blocs
             # Does your schema exist on the blockchain
-            schema_response = requests.get(f"{AGENT_URL}/schemas/FUKLxsjrYSHgScLbHuPTo4%3A2%3ACQENDroitAccesVirtuel%3A0.1", headers={"x-api-key": API_KEY})
+            schema_response = requests.get(f"{AGENT_URL}/schemas/FUKLxsjrYSHgScLbHuPTo4%3A2%3ACQENDroitAccesVirtuel%3A0.1.22", headers={"x-api-key": API_KEY})
             logger.info(schema_response.text)
             schema_response_body = schema_response.json()
             schema_id = schema_response_body["schema"]
@@ -43,7 +43,7 @@ class EmailVerificationConfig(AppConfig):
                 # Don't forget to change the attributes for your use case
                 schema_body = {
                     "schema_name": "CQENDroitAccesVirtuel",
-                    "schema_version": "0.1",
+                    "schema_version": "0.1.22",
                     "attributes": ["email", "time"]
                 }
 
@@ -72,9 +72,9 @@ class EmailVerificationConfig(AppConfig):
                 # Don't forget to change the attributes for your use case
                 credential_definition_body = {
                     "revocation_registry_size": 10000,
-                    "schema_id": "FUKLxsjrYSHgScLbHuPTo4:2:CQENDroitAccesVirtuel:0.1",
+                    "schema_id": "FUKLxsjrYSHgScLbHuPTo4:2:CQENDroitAccesVirtuel:0.1.22",
                     "support_revocation": "true",
-                    "tag": "RegistreAccesVirtuelCQEN-0.1.1-flihp"
+                    "tag": "RegistreAccesVirtuelCQEN-0.1.22-flihp"
                 }
                 credential_definition_response = requests.post(f"{AGENT_URL}/credential-definitions", headers={"x-api-key": API_KEY}, json=credential_definition_body)
                 logger.info(credential_definition_response.text)
