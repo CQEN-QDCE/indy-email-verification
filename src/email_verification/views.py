@@ -139,34 +139,44 @@ def verify_redirect(request, connection_id):
 @csrf_exempt
 def webhooks(request, topic):
 
+    print("****************************** Goodbye, cruel world 1 ******************************")
     message = json.loads(request.body)
+    print("****************************** Goodbye, cruel world 2 ******************************")
     logger.info(f"webhook recieved - topic: {topic} body: {request.body}")
 
+    print("****************************** Goodbye, cruel world 3 ******************************")
     if topic == "connections" and message["state"] == "request":
+        print("****************************** Goodbye, cruel world 3A ******************************")
         connection_id = message["connection_id"]
-        SessionState.objects.filter(connection_id=connection_id).update(
-            state="connection-request-received"
-        )
+        print("****************************** Goodbye, cruel world 3B ******************************")
+        SessionState.objects.filter(connection_id=connection_id).update(state="connection-request-received")
 
     # Handle new invites, send cred offer
+    print("****************************** Goodbye, cruel world 4 ******************************")
     if topic == "connections" and message["state"] == "response":
+        print("****************************** Goodbye, cruel world 4A ******************************")
+        print("****************************** Goodbye, cruel world 4B ******************************")
         credential_definition_id = cache.get("credential_definition_id")
+        print("****************************** Goodbye, cruel world 4C ******************************")
         assert credential_definition_id is not None
+        print("****************************** Goodbye, cruel world 4D ******************************")
         connection_id = str(message["connection_id"])
 
-        SessionState.objects.filter(connection_id=connection_id).update(
-            state="connection-formed"
-        )
+        print("****************************** Goodbye, cruel world 4F ******************************")
+        SessionState.objects.filter(connection_id=connection_id).update(state="connection-formed")
 
         time.sleep(5)
 
+        print("****************************** Goodbye, cruel world 4G ******************************")
         logger.info(
             f"Sending credential offer for connection {connection_id} "
             f"and credential definition {credential_definition_id}"
         )
 
+        print("****************************** Goodbye, cruel world 4H ******************************")
         verification = get_object_or_404(Verification, connection_id=connection_id)
 
+        print("****************************** Goodbye, cruel world 4I ******************************")
         request_body = {
             "auto_issue": True,
             "connection_id": connection_id,
@@ -187,54 +197,55 @@ def webhooks(request, topic):
             },
         }
 
-        print("****************************** Goodbye, cruel world 1 ******************************")
+        print("****************************** Goodbye, cruel world 4J ******************************")
         print(request_body)
-        print("****************************** Goodbye, cruel world 2 ******************************")
+        print("****************************** Goodbye, cruel world 4K ******************************")
 
         try:
-            print("****************************** Goodbye, cruel world 3 ******************************")
+            print("****************************** Goodbye, cruel world 5A ******************************")
             response = requests.post(f"{AGENT_URL}/issue-credential/send-offer",headers={"x-api-key": API_KEY}, json=request_body)
-            print("****************************** Goodbye, cruel world 4 ******************************")
+            print("****************************** Goodbye, cruel world 5B ******************************")
             print(response)
             response.raise_for_status()
-            print("****************************** Goodbye, cruel world 5 ******************************")
+            print("****************************** Goodbye, cruel world 5C ******************************")
             print(response.raise_for_status())
         except Exception:
-            print("****************************** Goodbye, cruel world 6 ******************************")
+            print("****************************** Goodbye, cruel world 5D ******************************")
             logger.exception("Error sending credential offer:")
-            print("****************************** Goodbye, cruel world 7 ******************************")
+            print("****************************** Goodbye, cruel world 5E ******************************")
             SessionState.objects.filter(connection_id=connection_id).update(state="offer-error")
-            print("****************************** Goodbye, cruel world 8 ******************************")
+            print("****************************** Goodbye, cruel world 5F ******************************")
         else:
-            print("****************************** Goodbye, cruel world 9 ******************************")
+            print("****************************** Goodbye, cruel world 5G ******************************")
             SessionState.objects.filter(connection_id=connection_id).update(state="offer-sent")
-            print("****************************** Goodbye, cruel world 10 ******************************")
+            print("****************************** Goodbye, cruel world 5H ******************************")
 
-        print("****************************** Goodbye, cruel world 11 ******************************")
+        print("****************************** Goodbye, cruel world 6 ******************************")
         return HttpResponse()
 
     # Handle completion of credential issue
+    print("****************************** Goodbye, cruel world 7 ******************************")
     if topic == "issue_credential" and message["state"] == "credential_issued":
-        print("****************************** Goodbye, cruel world 12 ******************************")
+        print("****************************** Goodbye, cruel world 7A ******************************")
         credential_exchange_id = message["credential_exchange_id"]
-        print("****************************** Goodbye, cruel world 13 ******************************")
+        print("****************************** Goodbye, cruel world 7B ******************************")
         connection_id = message["connection_id"]
 
-        print("****************************** Goodbye, cruel world 14 ******************************")
+        print("****************************** Goodbye, cruel world 7C ******************************")
         logger.info(
             "Completed credential issue for credential exchange "
             f"{credential_exchange_id} and connection {connection_id}"
         )
 
-        print("****************************** Goodbye, cruel world 15 ******************************")
+        print("****************************** Goodbye, cruel world 7D ******************************")
         SessionState.objects.filter(connection_id=connection_id).update(
             state="credential-issued"
         )
 
-        print("****************************** Goodbye, cruel world 16 ******************************")
+        print("****************************** Goodbye, cruel world 7E ******************************")
         return HttpResponse()
 
-    print("****************************** Goodbye, cruel world 17 ******************************")
+    print("****************************** Goodbye, cruel world 8 ******************************")
     logger.warning(f"Webhook for topic {topic} and state {message['state']} is not implemented")
     return HttpResponse()
     
