@@ -65,7 +65,7 @@ def submit(request):
                     "Follow this link to connect with our "
                     f"verification service: {redirect_url}"
                 ),
-                "Service de vérification de courriel du CQEN <ne-pas-repondre@asea.cqen.ca>",
+                "Service de vérification de courriel du CQEN <ne-pas-repondre@cqen.ca>",
                 [email],
                 fail_silently=False,
                 html_message=email_html,
