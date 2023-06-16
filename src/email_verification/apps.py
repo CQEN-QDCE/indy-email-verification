@@ -77,7 +77,7 @@ class EmailVerificationConfig(AppConfig):
                     "revocation_registry_size": 10000,
                     "schema_id": "FUKLxsjrYSHgScLbHuPTo4:2:CQENDroitAccesVirtuel:0.1",
                     "support_revocation": "true",
-                    "tag": "RegistreAccesVirtuelCQEN-0.1.12-flihp-smtp"
+                    "tag": "RegistreAccesVirtuelCQEN-0.1.13-flihp-smtp"
                 }
                 credential_definition_response = requests.post(f"{AGENT_URL}/credential-definitions", headers={"x-api-key": API_KEY}, json=credential_definition_body)
                 logger.info(credential_definition_response.text)
