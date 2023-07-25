@@ -1,5 +1,6 @@
 import os
 import logging
+import random
 
 from django.apps import AppConfig
 from django.core.cache import cache
@@ -74,11 +75,12 @@ class EmailVerificationConfig(AppConfig):
                 # N'oubliez pas de changer les attributs pour votre cas d'utilisation
                 # Don't forget to change the attributes for your use case
                 # changez le numéro sequentiel du tag, 
+                randSeq = random.randint(100000, 999999); 
                 credential_definition_body = {
                     "revocation_registry_size": 10000,
                     "schema_id": "FUKLxsjrYSHgScLbHuPTo4:2:CQENDroitAccesVirtuel:0.1",
                     "support_revocation": "true",
-                    "tag": "RegistreAccesVirtuelCQEN-0.1.28-flihp-smtp"
+                    "tag": "RegistreAccesVirtuelCQEN-"+ randSeq +"-flihp-smtp"
                 }
                 credential_definition_response = requests.post(f"{AGENT_URL}/credential-definitions", headers={"x-api-key": API_KEY}, json=credential_definition_body)
                 logger.info(credential_definition_response.text)
