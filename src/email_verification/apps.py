@@ -76,7 +76,7 @@ class EmailVerificationConfig(AppConfig):
                 # Don't forget to change the attributes for your use case
                 # changez le numéro sequentiel du tag, 
                 randSeq = random.randint(100000, 999999); 
-                tag = "RegistreAccesVirtuelCQEN-"+ str(randSeq) +"-flihp-smtp";
+                tag = "RegistreAccesVirtuelCQEN-"+ str(randSeq) +"-prod";
                 logger.info("TAG CREE: " + tag);
                 credential_definition_body = {
                     "revocation_registry_size": 10000,
