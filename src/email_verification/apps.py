@@ -76,11 +76,13 @@ class EmailVerificationConfig(AppConfig):
                 # Don't forget to change the attributes for your use case
                 # changez le numéro sequentiel du tag, 
                 randSeq = random.randint(100000, 999999); 
+                tag = "RegistreAccesVirtuelCQEN-"+ randSeq +"-flihp-smtp";
+                logger.info("TAG CREE: " + tag);
                 credential_definition_body = {
                     "revocation_registry_size": 10000,
                     "schema_id": "FUKLxsjrYSHgScLbHuPTo4:2:CQENDroitAccesVirtuel:0.1",
                     "support_revocation": "true",
-                    "tag": "RegistreAccesVirtuelCQEN-"+ randSeq +"-flihp-smtp"
+                    "tag": tag
                 }
                 credential_definition_response = requests.post(f"{AGENT_URL}/credential-definitions", headers={"x-api-key": API_KEY}, json=credential_definition_body)
                 logger.info(credential_definition_response.text)
