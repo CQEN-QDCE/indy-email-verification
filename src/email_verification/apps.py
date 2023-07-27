@@ -75,9 +75,9 @@ class EmailVerificationConfig(AppConfig):
             if len(tmp_credential_definition_id) == 0:
                 # N'oubliez pas de changer les attributs pour votre cas d'utilisation
                 # Don't forget to change the attributes for your use case
-                # changez le numéro sequentiel du tag, 
+                # changez le numéro sequentiel du tag,
                 random.seed(datetime.now().timestamp());
-                randSeq = random.randint(100000, 999999); 
+                randSeq = random.randint(100000,999999); 
                 tag = "RegistreAccesVirtuelCQEN-"+ str(randSeq) +"-prod";
                 credential_definition_body = {
                     "revocation_registry_size": 10000,
