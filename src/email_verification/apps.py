@@ -75,6 +75,9 @@ class EmailVerificationConfig(AppConfig):
             if len(tmp_credential_definition_id) == 0:
                 # N'oubliez pas de changer les attributs pour votre cas d'utilisation
                 # Don't forget to change the attributes for your use case
+                # changez le numéro sequentiel du tag, 
+                random.seed(datetime.now().timestamp());
+                randSeq = random.randint(100000,999999); 
                 # changez le numéro sequentiel du tag,
                 random.seed(datetime.now().timestamp());
                 randSeq = random.randint(100000,999999); 
