@@ -1,6 +1,7 @@
 import os
 import logging
 import random
+from datetime import datetime
 
 from django.apps import AppConfig
 from django.core.cache import cache
@@ -75,9 +76,9 @@ class EmailVerificationConfig(AppConfig):
                 # N'oubliez pas de changer les attributs pour votre cas d'utilisation
                 # Don't forget to change the attributes for your use case
                 # changez le numéro sequentiel du tag, 
+                random.seed(datetime.now().timestamp());
                 randSeq = random.randint(100000, 999999); 
                 tag = "RegistreAccesVirtuelCQEN-"+ str(randSeq) +"-prod";
-                logger.info("TAG CREE: " + tag);
                 credential_definition_body = {
                     "revocation_registry_size": 10000,
                     "schema_id": "FUKLxsjrYSHgScLbHuPTo4:2:CQENDroitAccesVirtuel:0.1",
