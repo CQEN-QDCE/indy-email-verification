@@ -78,10 +78,6 @@ class EmailVerificationConfig(AppConfig):
                 # changez le numéro sequentiel du tag, 
                 random.seed(datetime.now().timestamp());
                 randSeq = random.randint(100000,999999); 
-                # changez le numéro sequentiel du tag,
-                random.seed(datetime.now().timestamp());
-                randSeq = random.randint(100000,999999); 
-                logger.info("TAG CREE: " + tag);
                 tag = "RegistreAccesVirtuelCQEN-"+ str(randSeq) +"-prod";
                 credential_definition_body = {
                     "revocation_registry_size": 10000,
