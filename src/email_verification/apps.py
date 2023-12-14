@@ -48,7 +48,7 @@ class EmailVerificationConfig(AppConfig):
                 # Don't forget to change the attributes for your use case
                 schema_body = {
                     "schema_name": "CQENDroitAccesVirtuel",
-                    "schema_version": "0.2",
+                    "schema_version": "0.2.2",
                     "attributes": ["email", "time"]
                 }
 
@@ -83,7 +83,7 @@ class EmailVerificationConfig(AppConfig):
                 tag = "RegistreAccesVirtuelCQEN-"+ str(randSeq) +"-prod";
                 credential_definition_body = {
                     # "revocation_registry_size": 10000,
-                    "schema_id": "FUKLxsjrYSHgScLbHuPTo4:2:CQENDroitAccesVirtuel:0.1",
+                    "schema_id": "FUKLxsjrYSHgScLbHuPTo4:2:CQENDroitAccesVirtuel:0.2.2",
                     "support_revocation": "false",
                     "tag": tag
                 }
