@@ -33,7 +33,7 @@ class EmailVerificationConfig(AppConfig):
     
             # Est-ce que votre schéma existe sur la chaîne de blocs
             # Does your schema exist on the blockchain
-            schema_response = requests.get(f"{AGENT_URL}/schemas/FUKLxsjrYSHgScLbHuPTo4%3A2%3ACQENDroitAccesVirtuel%3A0.2", headers={"x-api-key": API_KEY})
+            schema_response = requests.get(f"{AGENT_URL}/schemas/FUKLxsjrYSHgScLbHuPTo4:2:CQENDroitAccesVirtuel:0.2.2", headers={"x-api-key": API_KEY})
             logger.info(schema_response.text)
             logger.info(f"Does your schema exist on the blockchain: {schema_response.text}")
             schema_response_body = schema_response.json()
@@ -48,7 +48,7 @@ class EmailVerificationConfig(AppConfig):
                 # Don't forget to change the attributes for your use case
                 schema_body = {
                     "schema_name": "CQENDroitAccesVirtuel",
-                    "schema_version": "0.1.27",
+                    "schema_version": "0.2",
                     "attributes": ["email", "time"]
                 }
 
@@ -70,6 +70,8 @@ class EmailVerificationConfig(AppConfig):
             credential_definition_response_body = credential_definition_response.json()
             tmp_credential_definition_id = credential_definition_response_body["credential_definition_ids"]
 
+            logger.info(f"tmp cred def id: {tmp_credential_definition_id}")
+            
             # Sinon, créer le credential definition avec votre agent
             # Otherwise, create the credential definition with your agent
             if len(tmp_credential_definition_id) == 0:
@@ -88,11 +90,13 @@ class EmailVerificationConfig(AppConfig):
                 credential_definition_response = requests.post(f"{AGENT_URL}/credential-definitions", headers={"x-api-key": API_KEY}, json=credential_definition_body)
                 logger.info(credential_definition_response.text)
 
-                if credential_definition_response.status_code() == 200:
+                logger.info(f"credential_definition_response.status_code(): {credential_definition_response.status_code()}")
+
+                # if credential_definition_response.status_code() == 200:
                     credential_definition_response_body = credential_definition_response.json()
                     credential_definition_id = credential_definition_response_body["credential_definition_id"]
-                else:
-                    logger.info("The credential definition already exist on the ledger")
+                #else:
+                #    logger.info("The credential definition already exist on the ledger")
             else:
                 credential_definition_id = tmp_credential_definition_id[0]
 
