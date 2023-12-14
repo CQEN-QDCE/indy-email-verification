@@ -71,7 +71,7 @@ class EmailVerificationConfig(AppConfig):
             tmp_credential_definition_id = credential_definition_response_body["credential_definition_ids"]
 
             logger.info(f"tmp cred def id: {tmp_credential_definition_id}")
-            
+
             # Sinon, créer le credential definition avec votre agent
             # Otherwise, create the credential definition with your agent
             if len(tmp_credential_definition_id) == 0:
@@ -89,12 +89,10 @@ class EmailVerificationConfig(AppConfig):
                 }
                 credential_definition_response = requests.post(f"{AGENT_URL}/credential-definitions", headers={"x-api-key": API_KEY}, json=credential_definition_body)
                 logger.info(credential_definition_response.text)
-
                 logger.info(f"credential_definition_response.status_code(): {credential_definition_response.status_code()}")
-
                 # if credential_definition_response.status_code() == 200:
-                    credential_definition_response_body = credential_definition_response.json()
-                    credential_definition_id = credential_definition_response_body["credential_definition_id"]
+                credential_definition_response_body = credential_definition_response.json()
+                credential_definition_id = credential_definition_response_body["credential_definition_id"]
                 #else:
                 #    logger.info("The credential definition already exist on the ledger")
             else:
